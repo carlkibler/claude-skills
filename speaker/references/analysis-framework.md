@@ -199,6 +199,54 @@ The most valuable findings often emerge from *connections between dimensions*:
 - Professional identity + creative projects = the gap between what they do and who they are
 - Working relationship + delegation style = how much context to provide unsolicited
 
+## The Central Tension
+
+Every person has a defining contradiction — two forces that coexist and create the engine
+that drives their behavior. Finding and naming this tension is the single most important
+analytical task in the personal portrait.
+
+**How to find it:**
+- Look for patterns that seem to oppose each other across dimensions
+- Check stated values against revealed behavior (from conversation samples)
+- Compare the scope of their projects against how they talk about change
+- Note where they invest time vs. what they say they care about
+
+**Examples of central tensions:**
+- Explorer vs. guardian: Starts many projects but demands production stability
+- Speed vs. rigor: Types fast, ships fast, but insists on dry-run safety and pre-mortems
+- Independent builder vs. team leader: 45 solo projects but works daily with a team
+- Perfectionist vs. pragmatist: Meticulous shell config but ships with known tech debt
+
+**The tension is not a flaw to resolve — it IS the person.** Name it in the opening of the
+personal portrait and let it organize the narrative. Don't try to reconcile it.
+
+## The Most Revealing Data Point
+
+Across all evidence, one fact will be disproportionately revealing. It might be:
+- A project name that captures their humor and values
+- A shell function that embodies their philosophy
+- An essay title that shows what they really care about
+- A correction pattern that reveals a hard-won lesson
+- An activity boundary (e.g., near-zero weekends) that shows a deliberate life choice
+
+**How to identify it:** After completing the full analysis, ask: "If I could only tell
+someone one thing about this person, what would it be?" The answer is the most revealing
+data point. It should appear prominently in the personal portrait, often as an anchor for
+the closing section.
+
+## Verbosity Triggers
+
+When a typically terse communicator writes at length, the topic is diagnostic. Catalog
+what triggers verbose messages:
+
+- Pushback on scope creep → values stability and predictability
+- Detailed technical briefs for novel problems → invests in problems they find interesting
+- Emotional outbursts ("holy hell", caps emphasis) → identifies what drains patience
+- Gratitude overflow ("thank you" repeated) → identifies what provides genuine relief
+
+The pattern of *when* someone switches registers reveals more than the content of any
+single message.
+
 ## Strength of Evidence Scale
 
 When writing the profile, rate the confidence of each finding:

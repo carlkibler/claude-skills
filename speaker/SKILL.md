@@ -156,6 +156,20 @@ The "Speaker for the Dead" document. Who this person really is — not their res
 - The texture — quirks, humor, aesthetic taste, the small things that make them *them*
 - Closing: The through-line — what connects all of this into a coherent person
 
+**Critical writing prompts:**
+
+- **Find the central tension.** Every person has a defining contradiction — two forces that
+  coexist and drive them. The person who starts 45 projects but writes "I want stability." The
+  person who moves fast but insists on dry-run defaults. Name it explicitly. The tension IS the
+  person — don't resolve it, honor it.
+- **Identify the most revealing single data point.** Across all the evidence, one fact will tell
+  you more about this person than any paragraph of analysis. An essay title, a shell function
+  name, a project they keep coming back to, a correction they made. Find it and let it anchor
+  the portrait.
+- **Longer messages are diagnostic.** When a typically terse person writes at length, pay
+  attention to *what* triggers verbosity. It usually reveals what they're protecting or what
+  genuinely excites them.
+
 **Tone:** Warm but honest. Like a close friend who knows you well enough to be truthful. Never
 sycophantic, never clinical.
 
@@ -170,6 +184,18 @@ The document a hiring manager, recruiter, or professional contact should read.
 - Leadership signals — team building, mentoring, architectural decision-making
 - Project portfolio — work AND personal, showing range and initiative
 - Working style — how they operate day-to-day, what kind of team/org they thrive in
+
+**Proficiency calibration:** For each technical area, assign an evidence-based depth level:
+
+- **Expert:** Daily use, custom tooling, deep configuration, architectural decisions.
+  Evidence: high session counts, detailed CLAUDE.md, performance optimization work.
+- **Proficient:** Regular use, comfortable across the surface area, some customization.
+  Evidence: moderate session counts, working configurations, shipped projects.
+- **Familiar:** Has used it, can navigate it, reaches for it when appropriate.
+  Evidence: occasional sessions, follows existing patterns rather than creating new ones.
+
+Always show the evidence for the rating. "Expert — 1,136 sessions, custom management commands,
+startup optimization from 5s to 1.2s" is credible. "Expert" alone is not.
 
 **Tone:** Professional but not stiff. Third-person. Backed by evidence. Useful for resume
 updates, LinkedIn, cover letter context, or interview prep.
@@ -235,3 +261,18 @@ knows themselves better than any analysis — their corrections are data too.
 - **Name the through-line.** Every person has one — the thread that connects their disparate
   activities into a coherent identity. Finding it is the difference between a list of facts
   and a portrait.
+
+## Model Recommendations
+
+The personal portrait quality depends heavily on the writing model's ability to synthesize
+narrative from evidence. For best results:
+
+- **Opus-class models:** Best for the personal portrait and through-line identification.
+  These models produce the narrative cohesion and insight density the portrait demands.
+- **Sonnet-class models:** Good for the professional portrait, working-with-me guide, and
+  system prompt. These are more structured documents where clarity matters more than voice.
+- **Haiku-class models:** Suitable for data collection, discovery scripts, and stats
+  generation. Save the expensive context for synthesis, not scanning.
+
+When running all four documents, consider using subagents with model overrides: opus for
+the personal portrait, sonnet for the other three.
