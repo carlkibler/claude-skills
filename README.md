@@ -9,6 +9,7 @@ Personal skills for [Claude Code](https://claude.ai/claude-code).
 | [pre-mortem](skills/pre-mortem/) | Multi-agent project pre-mortem (Gary Klein technique) |
 | [profile-me](skills/profile-me/) | Build AI profile from digital footprint |
 | [getting-second-opinions](skills/getting-second-opinions/) | Validate decisions with gpt-5.4-codex via Copilot CLI |
+| [handle-pr](skills/handle-pr/) | Auto-handle PR review comments, reply, watch for new ones |
 | [okta-sso-debugger](skills/okta-sso-debugger/) | Okta CIAM SSO debugging for Leap tenants |
 
 ## Setup

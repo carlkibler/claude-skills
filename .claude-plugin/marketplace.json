@@ -29,6 +29,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "handle-pr",
+      "source": "./skills/handle-pr",
+      "description": "Auto-handle GitHub PR review comments — evaluate, implement, reply, trigger Copilot re-review, watch for new comments.",
+      "version": "1.0.0"
+    },
+    {
       "name": "okta-sso-debugger",
       "source": "./skills/okta-sso-debugger",
       "description": "Diagnose, validate, and document Okta CIAM SSO configurations for Leap tenants. 22-check validator, user debugging workflow, trustClaims detection.",

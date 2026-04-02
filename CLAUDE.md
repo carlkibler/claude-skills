@@ -67,5 +67,6 @@ skills/
   ├── pre-mortem/                # Multi-agent pre-mortem analysis
   ├── profile-me/                # Build AI profile from digital footprint
   ├── getting-second-opinions/   # Copilot CLI validation with gpt-5.4-codex
+  ├── handle-pr/                 # Auto-handle PR review comments
   └── okta-sso-debugger/         # Okta CIAM SSO debugging for Leap tenants
 ```
