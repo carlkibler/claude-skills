@@ -1,17 +1,15 @@
 ---
-name: speaker
-description: "Build a comprehensive, honest profile of the user from their digital footprint (Claude Code history, project files, dotfiles, git config, memories, and conversation patterns). Produces multiple output documents: a personal portrait, a professional portrait, a working-with-me guide for AI assistants, and a compact system prompt. Inspired by Orson Scott Card's Speaker for the Dead — truthful, fair, and in service of the person. Use when asked to profile me, get to know me, build a context document, create my AI assistant profile, speaker, or similar requests to understand who the user is."
+name: profile-me
+description: "Build a comprehensive, portable AI profile of the user from their digital footprint (Claude Code history, project files, dotfiles, git config, memories, and conversation patterns). Produces multiple output documents: a personal portrait, a professional portrait, a working-with-me guide, and a compact system prompt ready to paste into any AI assistant. Use when asked to profile me, build my AI profile, create my context document, make a system prompt about me, help another AI get to know me, or similar requests."
 ---
 
-# Speaker
+# Profile Me
 
-> "The Speaker told the truth... not as the world saw them, but as they truly were."
+Build an honest, portable profile of the user — a context document they can hand to any AI
+assistant (Claude, GPT, Gemini, or whatever comes next) to skip the "who are you?" warmup.
 
-## Philosophy
-
-This skill builds a truthful, multidimensional portrait of a person from their digital footprint.
-It is modeled on the "Speaker for the Dead" concept from Orson Scott Card: the goal is to tell the
-truth about who someone is — not to flatter, not to judge, but to *understand* and *serve*.
+The goal is a *useful* artifact, not a biography. Inspired by Orson Scott Card's Speaker for the
+Dead: tell the truth about who someone is — not to flatter, not to judge, but to understand and serve.
 
 **Core principles:**
 
@@ -30,10 +28,10 @@ truth about who someone is — not to flatter, not to judge, but to *understand*
 
 Trigger on requests like:
 
-- "profile me", "get to know me", "build my profile"
-- "create context for my AI assistant"
-- "speaker" or "speak for me"
-- "help another Claude understand me"
+- "profile me", "build my profile", "get to know me"
+- "create my AI profile" or "build my context document"
+- "make a system prompt about me"
+- "help another AI get to know me" (Claude, GPT, Gemini, etc.)
 - "build a working-with-me guide"
 - "what do you know about me"
 - Requests for resume context, LinkedIn material, or personal brand documents

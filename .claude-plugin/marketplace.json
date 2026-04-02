@@ -1,0 +1,42 @@
+{
+  "name": "carlkibler-skills",
+  "owner": {
+    "name": "carlkibler"
+  },
+  "plugins": [
+    {
+      "name": "pre-mortem",
+      "source": "./skills/pre-mortem",
+      "description": "Multi-agent project pre-mortem based on Gary Klein's technique. Spawns parallel AI agents with different failure-finding mandates, synthesizes ranked risks with mitigations.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Carl Kibler"
+      }
+    },
+    {
+      "name": "profile-me",
+      "source": "./skills/profile-me",
+      "description": "Build a portable AI profile of the user from their digital footprint. Produces personal portraits, professional portraits, working-with-me guides, and a compact system prompt for any AI assistant.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Carl Kibler"
+      }
+    },
+    {
+      "name": "getting-second-opinions",
+      "source": "./skills/getting-second-opinions",
+      "description": "Use GitHub Copilot CLI to validate decisions with gpt-5.4-codex for critical code reviews, design decisions, and pre-merge validation.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "okta-sso-debugger",
+      "source": "./skills/okta-sso-debugger",
+      "description": "Diagnose, validate, and document Okta CIAM SSO configurations for Leap tenants. 22-check validator, user debugging workflow, trustClaims detection.",
+      "version": "1.0.0"
+    }
+  ],
+  "metadata": {
+    "description": "Personal Claude skills by Carl Kibler.",
+    "version": "1.0.0"
+  }
+}

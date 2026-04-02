@@ -1,0 +1,10 @@
+{
+  "name": "carl-skills",
+  "version": "0.1.0",
+  "description": "Reusable skills for Claude Code and Claude Cowork",
+  "author": {
+    "name": "Carl Kibler"
+  },
+  "repository": "https://github.com/carlkibler/claude-skills",
+  "license": "MIT"
+}
