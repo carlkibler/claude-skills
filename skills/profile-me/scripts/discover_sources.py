@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
 """
-Discover available data sources for Speaker profile generation.
+Discover available data sources for profile generation.
 
 Scans the user's environment for Claude Code artifacts, project files,
 shell configuration, and other sources of profile data.

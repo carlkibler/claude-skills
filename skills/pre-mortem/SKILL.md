@@ -65,6 +65,10 @@ Tailor the scenario to feel real and specific to the project. Generic scenarios 
 
 This is the heart of the technique. Spawn **5-6 agents in parallel**, each with a different failure-finding mandate. The mandate matters more than the persona — tell each agent what SUCCESS looks like for their role.
 
+### Data Sharing Gate
+
+If the project contains proprietary code, customer data, or sensitive business logic, ask the user before sending context to external LLMs: **"This project has [sensitive indicators]. OK to share context with external AI models, or should I run Claude-only mode?"** If in doubt, default to Claude-only.
+
 ### Environment Detection
 
 First, detect what LLM tools are available. Run:
@@ -204,6 +208,7 @@ YOUR TASK:
    - What specific action prevents or reduces this risk?
    - Who should own it? (role, not person name)
    - When should it be done? (before X milestone)
+   - What's the **tripwire indicator** — the earliest observable signal that this risk is materializing? (e.g., "API response times exceed 500ms in staging" or "3+ users report confusion in the same flow")
 5. OUTPUT FORMAT below.
 ```
 
@@ -223,6 +228,7 @@ _"It's [future date]. [Project] launched and failed. Here's what went wrong."_
 **Likelihood:** High | **Impact:** Catastrophic/Major
 **Sources:** Saboteur, Customer (agreement = high confidence)
 **Mitigation:** [specific action] → Owner: [role] → By: [milestone]
+**Tripwire:** [earliest observable signal this risk is activating]
 
 ### 2. ...
 
@@ -261,6 +267,18 @@ If the user identifies additional risks, add them to the report. If they want to
 - Save the report to Obsidian for reference
 
 </process>
+
+## Sprint-Level Variant (Compressed)
+
+For sprint planning or smaller features where a full 6-agent pre-mortem is overkill:
+
+1. **3 agents only:** Saboteur (technical), Customer (UX), Pessimist (dependencies)
+2. **3 failures each** instead of 5-8
+3. **Skip the fan-out script** — run all 3 as Claude subagents
+4. **Synthesis is a simple ranked list** — no elaborate report format
+5. **5-10 minutes total** instead of 20-30
+
+Use when: sprint items, well-scoped features, incremental changes. Use the full version for: new projects, architecture decisions, launches.
 
 <anti_patterns>
 

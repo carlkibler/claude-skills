@@ -38,6 +38,12 @@ Trigger on requests like:
 
 ## Data Collection
 
+### Privacy Gate
+
+Before reading ANY data, briefly tell the user what categories of data will be examined (conversation history, shell config, git config, project files, SSH config, AWS config) and ask: **"Anything you'd like me to skip?"**
+
+This is a one-time check, not a per-file approval. Most users will say "go ahead" but some may exclude SSH config, AWS accounts, or specific directories. Respect exclusions completely — don't reference excluded data even indirectly.
+
 ### Phase 1: Discovery
 
 Before analyzing anything, map what data sources exist. Not all users will have all sources.
@@ -139,8 +145,9 @@ for the full analytical rubric with questions and evidence patterns for each dim
 
 ## Output Documents
 
-Produce up to four documents, stored in the user's preferred temp/output directory. Ask the user
-which outputs they want, or produce all four by default.
+Produce up to four documents, stored in the user's preferred temp/output directory. If the user
+didn't specify, default to **Working-With-Me Guide + System Prompt** (most useful). Offer the
+portraits as optional extras.
 
 ### 1. Personal Portrait (`portrait-personal.md`)
 

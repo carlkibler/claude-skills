@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
 """
-Analyze Claude Code conversation history for Speaker profile generation.
+Analyze Claude Code conversation history for profile generation.
 
 Reads ~/.claude/history.jsonl and produces statistics about:
 - Project frequency (what they work on most)

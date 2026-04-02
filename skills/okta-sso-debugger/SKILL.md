@@ -64,11 +64,14 @@ When `trustClaims` is `true`, OIE re-evaluates the IdP authentication through th
 
 This setting is **not visible in the Okta admin UI**. It can only be checked and changed via API. It is the single most common root cause of "unable to sign in" for federated SSO users.
 
-To fix:
+Fix plan (requires explicit user approval — this is a write operation):
 ```bash
-uv run scripts/okta_api.py --env ciam get /api/v1/idps/{idpId} > /tmp/idp.json
-# Edit /tmp/idp.json: set policy.trustClaims to false, remove _links
-uv run scripts/okta_api.py --env ciam put /api/v1/idps/{idpId} --file /tmp/idp.json
+# 1. Save backup of current IdP config
+uv run scripts/okta_api.py --env ciam get /api/v1/idps/{idpId} > /tmp/idp-backup.json
+# 2. Prepare fixed version: set policy.trustClaims to false, remove _links
+# 3. Show user the exact change (only trustClaims should differ)
+# 4. After approval: apply
+uv run scripts/okta_api.py --env ciam put /api/v1/idps/{idpId} --file /tmp/idp-fixed.json
 ```
 
 ## Workflow
@@ -86,6 +89,8 @@ uv run scripts/okta_api.py --env ciam get /api/v1/idps/{idpId}
 # policy.trustClaims MUST be false
 ```
 If `true` → fix it → test again → likely solved.
+
+**If `false`, don't stop here** — continue the full diagnostic. `trustClaims` is the #1 cause but not the only one.
 
 **Step 2 — Check system logs for the failing user:**
 ```bash
