@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Personal Claude Code skills collection by Carl Kibler.
+Personal shared skill collection by Carl Kibler for Claude Code and Codex.
 
 ## Conventions
 
@@ -45,6 +45,18 @@ description: Specific description of what it does and when to use it.
 ---
 ```
 
+### Claude/Codex Compatibility
+
+Write skills in the shared `SKILL.md` format:
+- YAML frontmatter with `name` + `description`
+- markdown body instructions
+
+That format is portable across Claude Code and Codex. What is **not** portable is the install location and any tool-specific marketplace metadata.
+
+- Claude Code install path: `~/.claude/skills/<skill>/`
+- Codex install path: `~/.codex/skills/<skill>/`
+- Local Carl harness path: `~/.agents/skills/<skill>/`
+
 ### Naming
 
 - Skill directories: lowercase kebab-case (`okta-sso-debugger`)
@@ -68,5 +80,6 @@ skills/
   ├── profile-me/                # Build AI profile from digital footprint
   ├── getting-second-opinions/   # Copilot CLI validation with gpt-5.4-codex
   ├── handle-pr/                 # Auto-handle PR review comments
+  ├── chezmoi-drift/             # Dotfiles drift + shared-skill install audit
   └── okta-sso-debugger/         # Okta CIAM SSO debugging for Leap tenants
 ```

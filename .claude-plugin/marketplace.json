@@ -31,7 +31,13 @@
     {
       "name": "handle-pr",
       "source": "./skills/handle-pr",
-      "description": "Auto-handle GitHub PR review comments — evaluate, implement, reply, trigger Copilot re-review, watch for new comments.",
+      "description": "Autonomously handle GitHub PR review comments: evaluate each thread, implement HIGH/MEDIUM changes, run tests, Copilot quality pass, commit, reply to every thread, and watch for follow-up comments for 12 minutes.",
+      "version": "1.1.0"
+    },
+    {
+      "name": "chezmoi-drift",
+      "source": "./skills/chezmoi-drift",
+      "description": "Audit chezmoi-managed dotfiles for drift, unmanaged files worth tracking, and broken Claude/Codex shared-skill installs.",
       "version": "1.0.0"
     },
     {
