@@ -22,15 +22,7 @@ Get validation from a different AI before committing. You and the user share the
 Use the shared detection script from the `pre-mortem` skill if available, otherwise fall back to manual probing:
 
 ```bash
-# Preferred — uses the shared script
-bash "${CLAUDE_SKILL_DIR}/../pre-mortem/scripts/detect-llms.sh" --quiet
-
-# Fallback — manual probe
-gh copilot --version 2>/dev/null && echo "gh-copilot"
-command -v codex && echo "codex"
-command -v ask-gemini && echo "ask-gemini"
-command -v ask-copilot && echo "ask-copilot"
-command -v ollama && echo "ollama"
+bash "${CLAUDE_SKILL_DIR}/scripts/detect-llms.sh" --quiet
 ```
 
 Use the first one found. If none are available, tell the user and skip this step.
