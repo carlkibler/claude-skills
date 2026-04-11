@@ -1,5 +1,5 @@
 ---
-name: first-run-red-team
+name: run
 description: This skill should be used when red-teaming a product’s onboarding, installation, activation, first-run, and first-success experience. It is especially useful for launch readiness, utilities, menu bar apps, permission-heavy software, AI products, and any workflow where one confusing first impression can cause immediate abandonment.
 ---
 

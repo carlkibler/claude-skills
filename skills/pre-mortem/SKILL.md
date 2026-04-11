@@ -1,5 +1,5 @@
 ---
-name: pre-mortem
+name: run
 description: Run a project pre-mortem using multiple AI agents as diverse team members. Spawns parallel agents with different failure-finding mandates, synthesizes into ranked risks with mitigations. Use when starting a project, before a launch, before committing to an architecture, or when the user says "pre-mortem", "what could go wrong", "risk analysis", or "failure modes".
 ---
 

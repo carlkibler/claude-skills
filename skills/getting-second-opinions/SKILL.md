@@ -1,5 +1,5 @@
 ---
-name: getting-second-opinions
+name: run
 description: Use when completing complex implementations, making design decisions, or needing validation from different AI perspectives before committing major changes. Invokes GitHub Copilot CLI with gpt-5.3-codex for code review, architecture validation, and pre-merge checks.
 ---
 

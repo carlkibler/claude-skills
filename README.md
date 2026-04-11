@@ -27,9 +27,9 @@ After installing, run `/reload-plugins` to activate.
 Skills are namespaced by plugin name. Invoke directly or let Claude trigger them automatically:
 
 ```
-/pre-mortem:pre-mortem
-/handle-pr:handle-pr
-/trust-audit:trust-audit
+/pre-mortem:run
+/handle-pr:run
+/trust-audit:run
 ```
 
 Or just ask naturally — Claude will invoke the right skill based on context.
@@ -38,15 +38,15 @@ Or just ask naturally — Claude will invoke the right skill based on context.
 
 | Plugin name | Skill | Description |
 |-------------|-------|-------------|
-| `pre-mortem` | `/pre-mortem:pre-mortem` | Multi-agent project pre-mortem (Gary Klein technique) |
-| `profile-me` | `/profile-me:profile-me` | Build AI profile from digital footprint |
-| `getting-second-opinions` | `/getting-second-opinions:getting-second-opinions` | Validate decisions with gpt-5.4-codex via Copilot CLI |
-| `handle-pr` | `/handle-pr:handle-pr` | Auto-handle PR review comments end-to-end |
-| `chezmoi-drift` | `/chezmoi-drift:chezmoi-drift` | Audit chezmoi dotfiles drift and broken skill installs |
-| `trust-audit` | `/trust-audit:trust-audit` | Audit trust risks: permissions, privacy, billing, silent failures |
-| `support-inbox-simulation` | `/support-inbox-simulation:support-inbox-simulation` | Simulate support emails and founder-tax before launch |
-| `first-run-red-team` | `/first-run-red-team:first-run-red-team` | Red-team onboarding, permissions, and first-run abandonment |
-| `wifi-qr` | `/wifi-qr:wifi-qr` | Generate a WiFi QR code PNG |
+| `pre-mortem` | `/pre-mortem:run` | Multi-agent project pre-mortem (Gary Klein technique) |
+| `profile-me` | `/profile-me:run` | Build AI profile from digital footprint |
+| `getting-second-opinions` | `/getting-second-opinions:run` | Validate decisions with gpt-5.4-codex via Copilot CLI |
+| `handle-pr` | `/handle-pr:run` | Auto-handle PR review comments end-to-end |
+| `chezmoi-drift` | `/chezmoi-drift:run` | Audit chezmoi dotfiles drift and broken skill installs |
+| `trust-audit` | `/trust-audit:run` | Audit trust risks: permissions, privacy, billing, silent failures |
+| `support-inbox-simulation` | `/support-inbox-simulation:run` | Simulate support emails and founder-tax before launch |
+| `first-run-red-team` | `/first-run-red-team:run` | Red-team onboarding, permissions, and first-run abandonment |
+| `wifi-qr` | `/wifi-qr:run` | Generate a WiFi QR code PNG |
 
 ## Managing plugins
 

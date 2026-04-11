@@ -1,5 +1,5 @@
 ---
-name: profile-me
+name: run
 description: "Build a comprehensive, portable AI profile of the user from their digital footprint (Claude Code history, project files, dotfiles, git config, memories, and conversation patterns). Produces multiple output documents: a personal portrait, a professional portrait, a working-with-me guide, and a compact system prompt ready to paste into any AI assistant. Use when asked to profile me, build my AI profile, create my context document, make a system prompt about me, help another AI get to know me, or similar requests."
 ---
 
