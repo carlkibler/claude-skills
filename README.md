@@ -11,7 +11,6 @@ Personal skills for Claude Code and Codex.
 | [getting-second-opinions](skills/getting-second-opinions/) | Validate decisions with gpt-5.4-codex via Copilot CLI |
 | [handle-pr](skills/handle-pr/) | Auto-handle PR review comments, reply, watch for new ones |
 | [chezmoi-drift](skills/chezmoi-drift/) | Audit chezmoi drift, unmanaged dotfiles, and broken shared-skill installs |
-| [okta-sso-debugger](skills/okta-sso-debugger/) | Okta CIAM SSO debugging for Leap tenants |
 | [trust-audit](skills/trust-audit/) | Audit trust risks across permissions, privacy, billing, file mutation, and silent failure |
 | [support-inbox-simulation](skills/support-inbox-simulation/) | Simulate support emails, reviews, refunds, and founder-tax before launch |
 | [first-run-red-team](skills/first-run-red-team/) | Red-team onboarding, permissions, activation, and first-run abandonment risk |

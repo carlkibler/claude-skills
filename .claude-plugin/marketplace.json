@@ -41,12 +41,6 @@
       "version": "1.0.0"
     },
     {
-      "name": "okta-sso-debugger",
-      "source": "./skills/okta-sso-debugger",
-      "description": "Diagnose, validate, and document Okta CIAM SSO configurations for Leap tenants. 22-check validator, user debugging workflow, trustClaims detection.",
-      "version": "1.0.0"
-    },
-    {
       "name": "trust-audit",
       "source": "./skills/trust-audit",
       "description": "Audit whether a product will feel trustworthy, creepy, deceptive, risky, or surprisingly unsafe to users across permissions, privacy, billing, file mutation, and silent-failure surfaces.",
