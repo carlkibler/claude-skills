@@ -1,6 +1,6 @@
 ---
 name: run
-description: "Build a comprehensive, portable AI profile of the user from their digital footprint (Claude Code history, project files, dotfiles, git config, memories, and conversation patterns). Produces multiple output documents: a personal portrait, a professional portrait, a working-with-me guide, and a compact system prompt ready to paste into any AI assistant. Use when asked to profile me, build my AI profile, create my context document, make a system prompt about me, help another AI get to know me, or similar requests."
+description: "Build a comprehensive, portable AI profile of the user from their digital footprint (conversation history across Claude Code, Aider, OpenCode, Copilot, and other agents; project files; dotfiles; git config; memories). Produces multiple output documents: a personal portrait, a professional portrait, a working-with-me guide, and a compact system prompt ready to paste into any AI assistant. Use when asked to profile me, build my AI profile, create my context document, make a system prompt about me, help another AI get to know me, or similar requests."
 ---
 
 # Profile Me
@@ -49,11 +49,37 @@ This is a one-time check, not a per-file approval. Most users will say "go ahead
 Before analyzing anything, map what data sources exist. Not all users will have all sources.
 Run discovery in parallel where possible.
 
-**Source 1: Claude Code Environment**
+**Source 1: AI Agent Conversation History**
+
+Probe for each and read what exists. Don't assume any particular agent is installed.
+
+| Agent | Path | Format | User message field |
+|-------|------|--------|-------------------|
+| Claude Code | `~/.claude/history.jsonl` | JSONL | `display` |
+| Aider | `**/.aider.chat.history.md` (per-project) | Markdown | lines after `#### human` |
+| OpenCode | `~/.local/share/opencode/opencode.db` | SQLite | `message` table, `data` col (JSON) |
+| Copilot Chat (VS Code) | `~/Library/Application Support/Code/User/globalStorage/github.copilot-chat/**/*.jsonl` | JSONL | `v.requests[].message` |
+| Gemini CLI | `~/.gemini/` | metadata only | no conversation data stored locally |
+| Cursor | `~/Library/Application Support/Cursor/User/globalStorage/` | SQLite/JSONL | similar to VS Code |
+| Windsurf | `~/Library/Application Support/Windsurf/User/globalStorage/` | SQLite/JSONL | similar to VS Code |
+| Continue.dev | `~/.continue/` | JSON sessions | `messages[].content` where `role=user` |
+| ChatGPT (desktop) | `~/Library/Application Support/ChatGPT/` | SQLite | varies |
+| Amazon Q | `~/.aws/amazonq/` | varies | varies |
+
+Discovery commands:
+```bash
+# Check which agents have data
+ls ~/.claude/history.jsonl 2>/dev/null && echo "claude-code"
+find ~/dev -name ".aider.chat.history.md" -maxdepth 4 2>/dev/null
+ls ~/.local/share/opencode/opencode.db 2>/dev/null && echo "opencode"
+ls "~/Library/Application Support/Code/User/globalStorage/github.copilot-chat/" 2>/dev/null && echo "copilot-chat"
+ls ~/.continue/ 2>/dev/null && echo "continue"
+```
+
+**Source 1b: Claude Code Environment**
 ```
 ~/.claude/CLAUDE.md                          # Global instructions — personality, preferences, rules
 ~/.claude/settings.json                      # Tool preferences, model choices
-~/.claude/history.jsonl                      # Conversation history (display field = user messages)
 ~/.claude/projects/*/memory/                 # Per-project memories (feedback, user, project, reference types)
 ~/.claude/projects/*/memory/MEMORY.md        # Memory indexes
 ~/.claude/agents/                            # Custom agent definitions
@@ -81,11 +107,17 @@ Run discovery in parallel where possible.
 
 **Source 4: Conversation History Analysis**
 
-The `~/.claude/history.jsonl` file is the richest source of communication style data. Each line
-is a JSON object with a `display` field containing the user's message and a `project` field
-showing which project they were working in.
+Harvest user messages from every agent source found in Source 1. Each format requires different extraction:
 
-Extract:
+- **Claude Code** (`history.jsonl`): `jq -r 'select(.display != null and (.display | length) > 20) | .display' ~/.claude/history.jsonl`
+- **Aider** (`.aider.chat.history.md`): extract lines after `#### human` markers
+- **OpenCode** (SQLite): `sqlite3 ~/.local/share/opencode/opencode.db "SELECT data FROM message"` then parse JSON for role=user
+- **Copilot Chat** (JSONL): parse `v.requests[].message` from session files
+- **Continue.dev**: parse `messages` arrays from session JSON files, filter `role == "user"`
+
+Combine all sources into a single corpus before analysis. Deduplicate by content where the same text appears across agents. Note which agents were most active — tool diversity is itself a signal.
+
+Extract from the combined corpus:
 - **Project frequency counts** — which projects get the most attention (reveals real priorities)
 - **Message length distribution** — terse vs. verbose communicator
 - **Vocabulary patterns** — technical depth, formality level, humor frequency
@@ -93,6 +125,7 @@ Extract:
 - **Typo patterns** — fast typer who doesn't proofread vs. careful writer
 - **Delegation style** — gives detailed specs vs. terse goals vs. step-by-step instructions
 - **Correction patterns** — how they course-correct when you go wrong
+- **Agent preference patterns** — what tasks they route to which tool (reveals mental model of AI)
 
 ### Phase 2: Deep Reading
 
@@ -100,8 +133,9 @@ Read all discovered sources. Use subagents to parallelize across categories:
 - Agent 1: All memory files and MEMORY.md indexes
 - Agent 2: All CLAUDE.md files (global + per-project)
 - Agent 3: Shell/git/system configuration
-- Agent 4: Conversation history sampling and analysis
-- Agent 5: Project README files and structure
+- Agent 4: Claude Code conversation history sampling
+- Agent 5: Other agent conversation history (Aider, OpenCode, Copilot Chat, Continue, etc.)
+- Agent 6: Project README files and structure
 
 For conversation history, sample broadly — take messages from the beginning, middle, and recent
 history. Focus on messages between 20-500 characters (too short = "yes"/"ok", too long = pasted
