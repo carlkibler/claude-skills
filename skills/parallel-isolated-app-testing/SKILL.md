@@ -63,6 +63,9 @@ When asked to set up parallel app testing:
 
 For a deeper checklist, load [references/collision-checklist.md](references/collision-checklist.md).
 For a repeatable execution playbook, load [references/parallel-playbook.md](references/parallel-playbook.md).
+For launcher design, load [references/launcher-template.md](references/launcher-template.md).
+For fixture design, load [references/fixture-design.md](references/fixture-design.md).
+For common failure interpretation, load [references/troubleshooting.md](references/troubleshooting.md).
 
 <process>
 
@@ -148,7 +151,7 @@ Do not suppress behavior that the test lane is explicitly trying to verify unles
 
 A parallel-testing system is not complete if every instance lands in useless onboarding.
 
-Add fixture profiles that preseed the minimum state needed for useful test lanes.
+Add fixture profiles that preseed the minimum state needed for useful test lanes. Use [references/fixture-design.md](references/fixture-design.md) to keep fixtures narrow, deterministic, and documented.
 
 Common profiles:
 - `smoke-ready` — bypass onboarding, point to isolated input folder, disable noisy prompts
@@ -162,7 +165,7 @@ Document exactly what each fixture seeds and what it does *not* seed.
 
 ## Step 6: Create a helper launcher
 
-Always prefer a helper script over expecting humans or agents to hand-type long launch commands.
+Always prefer a helper script over expecting humans or agents to hand-type long launch commands. Use [references/launcher-template.md](references/launcher-template.md) as the starting shape.
 
 The helper should:
 - default to dry run
@@ -223,7 +226,7 @@ For each lane, collect:
 - screenshots if possible
 - failures, blockers, and suspected missing seams
 
-If deeper UI automation is blocked by OS permissions, say so explicitly instead of pretending the lane was fully exercised.
+If deeper UI automation is blocked by OS permissions, say so explicitly instead of pretending the lane was fully exercised. Use [references/troubleshooting.md](references/troubleshooting.md) to interpret common blockers honestly.
 
 ## Step 10: Close the loop
 
@@ -282,6 +285,55 @@ Use this format:
 2. [ ]
 3. [ ]
 ```
+
+## Reusable Patterns
+
+Keep these patterns consistent across projects:
+
+### 1. Isolation contract pattern
+- one instance name
+- one state root
+- one defaults suite
+- one fixture profile
+- one log file
+
+### 2. Dry-run-first launcher pattern
+Never make the default action mutate the machine.
+Show the command first. Launch only with an explicit live flag.
+
+### 3. Fixture ladder pattern
+Start with `smoke-ready`, then add narrower fixtures only when a real testing need appears.
+Do not create a giant omnifixture that tries to represent the entire app.
+
+### 4. Honest blocker reporting pattern
+If accessibility, screen capture, backend availability, or another dependency blocks deeper QA, report that as a blocker rather than inventing confidence.
+
+## Concrete Mini Examples
+
+### Example: Menu bar app with watched folders
+Needed seams:
+- duplicate-instance bypass
+- defaults suite override
+- app-support override
+- temp root override
+- watched-folder fixture root
+- notification suppression
+
+Likely first fixtures:
+- `smoke-ready`
+- `fake-provider`
+- `feedback-ready`
+
+### Example: Desktop app with export bundles
+Needed seams:
+- temp/export root override
+- stable per-instance logs
+- fixture for seeded recent history
+
+Likely parallel lanes:
+- exports / diagnostics lane
+- history / filters lane
+- settings / help lane
 
 ## Success Criteria
 
