@@ -19,21 +19,25 @@ Get validation from a different AI before committing. You and the user share the
 
 ## Agent Detection
 
-Check what's available, in priority order:
+Use the shared detection script from the `pre-mortem` skill if available, otherwise fall back to manual probing:
 
 ```bash
-command -v opencode   # opencode
-command -v codex      # OpenAI Codex CLI
-gh copilot --version  # GitHub Copilot CLI (gh extension)
-command -v aider      # aider
-command -v amp        # Amp
+# Preferred — uses the shared script
+bash "${CLAUDE_SKILL_DIR}/../pre-mortem/scripts/detect-llms.sh" --quiet
+
+# Fallback — manual probe
+gh copilot --version 2>/dev/null && echo "gh-copilot"
+command -v codex && echo "codex"
+command -v ask-gemini && echo "ask-gemini"
+command -v ask-copilot && echo "ask-copilot"
+command -v ollama && echo "ollama"
 ```
 
 Use the first one found. If none are available, tell the user and skip this step.
 
 ## How to Ask
 
-The prompt is the same regardless of agent — adapt the invocation to whatever's available.
+The prompt is the same regardless of agent — adapt the invocation to whatever's available. The `detect-llms.sh` script outputs `NAME|INVOKE_PATTERN|MODEL_FAMILY|NOTES` — use the `INVOKE_PATTERN` field, substituting `{prompt}` with your actual prompt.
 
 ### Pre-Merge Review (Most Common)
 
@@ -48,11 +52,6 @@ Show the diff from main and check for:
 - Performance implications
 - Security concerns
 ```
-
-**opencode:** `opencode "[prompt]"`
-**codex:** `codex "[prompt]"`
-**gh copilot:** `gh copilot suggest -t shell "[prompt]"` or use `--allow-read-tools` if available
-**aider:** `aider --message "[prompt]"`
 
 ### Design Decision Validation
 
