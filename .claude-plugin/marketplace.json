@@ -45,6 +45,24 @@
       "source": "./skills/okta-sso-debugger",
       "description": "Diagnose, validate, and document Okta CIAM SSO configurations for Leap tenants. 22-check validator, user debugging workflow, trustClaims detection.",
       "version": "1.0.0"
+    },
+    {
+      "name": "trust-audit",
+      "source": "./skills/trust-audit",
+      "description": "Audit whether a product will feel trustworthy, creepy, deceptive, risky, or surprisingly unsafe to users across permissions, privacy, billing, file mutation, and silent-failure surfaces.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "support-inbox-simulation",
+      "source": "./skills/support-inbox-simulation",
+      "description": "Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the diagnostics and product fixes that cut founder-tax.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "first-run-red-team",
+      "source": "./skills/first-run-red-team",
+      "description": "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup.",
+      "version": "1.0.0"
     }
   ],
   "metadata": {

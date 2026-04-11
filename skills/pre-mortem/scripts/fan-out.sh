@@ -6,7 +6,7 @@
 #
 # Detects available LLMs at runtime. Uses what's there, skips what isn't.
 # Claude-based agents (Saboteur, Historian) are handled by the skill via
-# the Agent tool — this script only handles external LLMs.
+# subagents — this script only handles outsider/external LLM roles.
 #
 # Exit: 0 if at least one agent succeeded, 1 if all failed
 
@@ -27,22 +27,30 @@ ${SCENARIO}
 INSTRUCTIONS:
 1. The failure is CERTAIN — it already happened. Do not question this.
 2. Write 5-8 specific, concrete reasons why it failed.
-3. For each reason:
-   - State what went wrong (one sentence)
-   - Explain the chain of events (2-3 sentences)
-   - Rate: likelihood (high/medium/low) x impact (catastrophic/major/minor)
+3. For each reason include:
+   - What goes wrong (one sentence)
+   - Chain of events (2-4 sentences)
+   - User experience: what the user notices, concludes, and does next
+   - Why the team misses it
+   - Likelihood (high/medium/low) x impact (catastrophic/major/minor)
+   - Trust damage (high/medium/low)
+   - Recoverability (easy/moderate/hard)
+   - Earliest signal / tripwire
 4. Be specific to THIS project. Generic risks are worthless here.
-5. Uncomfortable truths are the whole point. Hold nothing back.
-6. End with: The one failure nobody wants to talk about: [your most uncomfortable prediction]
+5. Focus on failures that damage product success, not just code correctness.
+6. Uncomfortable truths are the whole point. Hold nothing back.
+7. End with: The failure nobody wants to talk about: [your most uncomfortable prediction]
 
 FORMAT: numbered list. No preamble, no hedging."
 
 # Role definitions: NAME|MANDATE|CATEGORIES
 ROLES=(
-    "customer|You are the end user. This launched and you hate it. Explain why — what is confusing, broken, or missing? You succeed when you articulate frustrations the builders would never feel.|UX, adoption, onboarding, missing features, wrong assumptions about users"
-    "accountant|Find every way this costs more than expected — in money, time, maintenance burden, tech debt, or opportunity cost. You succeed when you surface hidden costs the team is ignoring.|Budget, timeline, maintenance, dependencies, operational overhead"
-    "pessimist|Assume the worst about every assumption in this plan. External dependencies will fail, timelines will slip, requirements will change. What dominoes fall? You succeed when you map cascading failures.|External risks, dependencies, scope creep, organizational chaos"
-    "newcomer|You have never seen this project before today. Read the description and point out everything that is unclear, assumed, or hand-waved. You succeed when you find the gaps everyone else is too close to see.|Assumptions, unclear requirements, knowledge silos, missing documentation"
+    "customer|You are the user advocate. This launched and users are disappointed, confused, or angry. Surface the exact moments where expectations are violated and trust erodes. You succeed when you articulate what the builders would rationalize away.|Onboarding, daily UX, expectation mismatch, trust loss, confusion, frustration, uninstall triggers"
+    "support|You run support for this product after launch. Find the failures that generate vague, repetitive, emotionally draining tickets that are hard to diagnose. You succeed when you expose hidden support burden and diagnostic blind spots.|Support burden, missing diagnostics, confusing states, documentation gaps, founder-tax"
+    "accountant|Find every way this costs more than expected — in money, time, maintenance burden, abuse, margin erosion, tech debt, or opportunity cost. You succeed when you surface hidden costs the team is ignoring.|Budget, margin, maintenance, abuse, operational overhead, opportunity cost"
+    "pessimist|Assume the worst about every assumption in this plan. External dependencies will fail, timelines will slip, requirements will change, and channels will behave differently. What dominoes fall? You succeed when you map cascading failures.|External risks, dependencies, platform shifts, scope creep, organizational chaos"
+    "newcomer|You have never seen this project before today. Read the description and point out everything that is unclear, assumed, hand-waved, or only obvious to insiders. You succeed when you find the gaps everyone else is too close to see.|Assumptions, unclear requirements, insider knowledge, missing documentation"
+    "critic|You are an early reviewer, blogger, or skeptical power user explaining publicly why this product is not ready. Find the narrative that compresses many issues into one damaging story. You succeed when you predict the review headline or viral complaint.|Public narrative, reviews, word of mouth, credibility, positioning, reputational damage"
 )
 
 # Write prompt to a temp file to avoid shell escaping issues

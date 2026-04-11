@@ -5,306 +5,368 @@ description: Run a project pre-mortem using multiple AI agents as diverse team m
 
 # Pre-Mortem: Multi-Agent Failure Analysis
 
-Based on Gary Klein's pre-mortem technique (HBR 2007) and Mitchell et al.'s prospective hindsight research — imagining failure as certain generates 30% more correct failure reasons than speculative risk assessment.
+Based on Gary Klein's pre-mortem technique and prospective hindsight research: assume failure is already real, then explain it concretely. The goal is not a generic risk list. The goal is to surface the failures that would actually hurt users, damage trust, create support chaos, and sink the launch.
+
+## What “good” looks like
+
+A strong pre-mortem is:
+- **specific** to this project, launch, audience, and distribution path
+- **emotionally real** about how failure feels to the user
+- **operationally grounded** about support, maintenance, and founder burden
+- **subtle** enough to catch trust erosion, silent degradation, and “works on my machine” traps
+- **actionable** enough that the top risks can turn into concrete mitigations immediately
 
 ## When to Use
 
-- Before starting a significant project or feature
-- Before a launch or major release
-- Before committing to an architecture decision
-- When the user asks "what could go wrong?" or wants risk analysis
-- Sprint-level: compressed version for sprint planning
+- Before a launch, beta, or public announcement
+- Before committing to an architecture or business model
+- When the product touches permissions, privacy, billing, or user files
+- When a utility app must feel trustworthy on day one
+- When the user asks “what could go wrong?”, “pre-mortem”, “risk analysis”, or “failure modes”
 
 ## When NOT to Use
 
-- Trivial bug fixes or well-scoped small changes
-- After the fact (use a post-mortem instead)
-- When the user wants to brainstorm what to build (use brainstorming skill)
-
-## Core Mechanism
-
-**Prospective hindsight**: "The project has failed" (certainty) unlocks deeper analysis than "the project might fail" (speculation). The brain shifts from defending a plan to explaining an outcome.
+- Tiny bug fixes or tightly scoped chores
+- After the fact (use a post-mortem)
+- Early ideation when the real question is what to build (use brainstorming)
 
 ---
 
 <process>
 
-## Phase 1: Gather Context (2 min)
+## Phase 1: Gather Context and Build the Failure Surface
 
-Before spawning agents, understand what we're pre-morteming.
+Before spawning anything, get a crisp picture of what success was supposed to feel like.
 
-**If context is unclear, ask ONE question:**
-"What are we pre-morteming? Give me: (a) the project/feature name, (b) a 1-3 sentence description, and (c) the timeline."
+**If context is missing, ask one question:**
+> What are we pre-morteming? Give me: (a) the project or feature, (b) who it is for, (c) what “success” means, and (d) the launch or decision timeline.
 
-**If context exists** (from a plan, CLAUDE.md, or conversation), summarize it in 2-3 sentences and confirm with the user.
+If context exists already, summarize it in 2-4 sentences.
 
-**Gather supporting context by reading:**
-- Any existing plan or spec document
-- CLAUDE.md project description
-- Recent git log for project state
-- Key architecture files if relevant
+### Read enough local context to be dangerous
 
-**Compose the scenario briefing** — this is the emotional hook that all agents receive:
+Gather the minimum needed from:
+- `CLAUDE.md` and `AGENTS.md` when present
+- the plan/spec/README/design docs
+- recent git log or changelog if relevant
+- the most relevant architecture files
+- existing support notes, launch docs, pricing notes, or prior pre-mortems if available
 
-```
+### Build a compact context brief
+
+Capture these explicitly before fan-out:
+- **Project / feature**
+- **Audience** — who the real user is, not the imagined one
+- **Core promise** — what the user believes this product will do for them
+- **Moments of truth** — onboarding, first use, daily use, failure recovery, upgrade, uninstall, billing, etc.
+- **Constraints** — founder time, support capacity, platform rules, margins, team size
+- **Risky surfaces** — permissions, privacy, file mutation, notifications, AI quality, cloud dependencies, billing, trust, OS integration, channel differences
+
+### Write the scenario briefing
+
+Make it vivid and specific. Generic doom yields generic risks.
+
+```text
 PROJECT: [name]
-DESCRIPTION: [what it does, who it's for]
-TIMELINE: [when it ships]
-STAKES: [what's riding on it — users, revenue, reputation, etc.]
+AUDIENCE: [who it serves]
+CORE PROMISE: [why users installed it]
+TIMELINE: [launch / release date]
+STAKES: [revenue, reputation, trust, support load, founder sanity]
+MOMENTS OF TRUTH: [onboarding, first task, recovery, billing, etc.]
 
-THE SCENARIO: It's [timeline + buffer]. The [project] launched and it was a disaster.
-[Stakeholder] called an emergency meeting. Users are [angry/confused/churning].
-The team is demoralized. Everyone's asking "how did we miss this?"
+THE SCENARIO:
+It is [future date after launch]. The launch went badly.
+Users are not just disappointed — they are confused, irritated, distrustful, or embarrassed.
+Support is noisy. Reviews are negative. The team now sees that several warning signs were visible in advance.
 
-Your job: explain what went wrong.
+Your job: explain exactly what went wrong, how users experienced it, why the team missed it, and what early signal would have revealed it.
 ```
 
-Tailor the scenario to feel real and specific to the project. Generic scenarios produce generic answers.
+## Phase 2: Add the Empathy Lens Before Analysis
 
-## Phase 2: Silent Individual Writing — Multi-Agent Fan-Out
+Do not let the exercise stay technical. Make the user emotionally present.
 
-This is the heart of the technique. Spawn **5-6 agents in parallel**, each with a different failure-finding mandate. The mandate matters more than the persona — tell each agent what SUCCESS looks like for their role.
+Before fan-out, write 3-7 bullets for each of these:
+- **What the user thought they were buying / enabling**
+- **What the user would forgive**
+- **What would feel creepy, sloppy, or untrustworthy**
+- **What would make them tell a friend “don’t install this”**
+- **What would generate a support email, angry review, refund, or uninstall**
+
+Use these to sharpen prompts and to judge severity later.
+
+## Phase 3: Silent Individual Writing — Multi-Agent Fan-Out
+
+This is the heart of the technique. Diversity matters more than politeness.
 
 ### Data Sharing Gate
 
-If the project contains proprietary code, customer data, or sensitive business logic, ask the user before sending context to external LLMs: **"This project has [sensitive indicators]. OK to share context with external AI models, or should I run Claude-only mode?"** If in doubt, default to Claude-only.
+If the project appears to contain proprietary code, customer data, secrets, or regulated material, ask before sending context to external models. If in doubt, default to Claude-only mode.
 
 ### Environment Detection
 
-First, detect what LLM tools are available. Run:
+If using external LLM CLIs, detect them first:
 
 ```bash
 bash ${SKILL_DIR}/scripts/detect-llms.sh
 ```
 
-This probes for: `llm`, `ask-gemini`, `gemini`, `ask-copilot`, `gh copilot`, `codex`, `ask-cerebras`, `ask-zai`, `ollama`, and deduplicates by model family.
+Modes:
 
-**Three execution modes based on what's available:**
+| Available tools | Mode | Strategy |
+|---|---|---|
+| 2+ external LLMs | Full diversity | Claude subagents for code-aware roles + external LLMs for outsider roles |
+| 1 external LLM | Hybrid | Claude subagents + one outsider model |
+| none | Claude-only | All roles as subagents with strongly differentiated mandates |
 
-| Available Tools | Mode | Strategy |
-|----------------|------|----------|
-| 2+ external LLMs | **Full diversity** | Claude agents + external LLMs for maximum architectural divergence |
-| 1 external LLM | **Hybrid** | Claude agents + one external for some divergence |
-| None | **Claude-only** | All 6 roles as Claude Agent subagents with strongly differentiated prompts |
+### Role roster
 
-Heterogeneous model architectures produce better divergence than the same model with different prompts. But Claude-only still works — the differentiation comes from the mandates, not the models.
+Use **6 core roles**. Add **2 optional roles** for high-stakes launches.
 
-### Agent Roster
+#### Core roles
 
-Each agent receives the same scenario briefing but a unique mandate:
+| Role | What they are trying to catch |
+|---|---|
+| **Saboteur** | technical breakage, silent failure, ugly edge cases, brittle integrations |
+| **Customer Advocate** | confusing UX, violated expectations, trust damage, “I hate this app” moments |
+| **Support Lead** | what turns into opaque, repetitive, emotionally draining support archaeology |
+| **Operator / Accountant** | cost, margin erosion, maintenance burden, abuse, founder-tax, process fragility |
+| **Pessimist** | dependency failures, platform shifts, timing, distribution, domino effects |
+| **Historian / Newcomer** | what the docs/code already warn about, plus what insiders forgot to explain |
 
-| Role | Mandate | Failure Categories | Preferred Model |
-|------|---------|-------------------|----------------|
-| **The Saboteur** | "Find every technical way this could break, fail silently, or degrade. You succeed when you identify failures others would dismiss as unlikely." | Architecture, scaling, integration, data, performance | Claude (Agent) — needs codebase access |
-| **The Customer** | "You are the end user. This launched and you hate it. Explain why — what's confusing, broken, or missing? You succeed when you articulate frustrations the builders would never feel." | UX, adoption, onboarding, missing features, wrong assumptions | External LLM preferred (fresh eyes) |
-| **The Accountant** | "Find every way this costs more than expected — in money, time, maintenance burden, tech debt, or opportunity cost. You succeed when you surface hidden costs the team is ignoring." | Budget, timeline, maintenance, dependencies, operational overhead | Any |
-| **The Pessimist** | "Assume the worst about every assumption in this plan. External dependencies will fail, timelines will slip, requirements will change. What dominoes fall? You succeed when you map cascading failures." | External risks, dependencies, scope creep, organizational chaos | Any |
-| **The Historian** | "Search the codebase, git history, and any docs for evidence of past failures, technical debt, or patterns that suggest this project will hit the same walls." | Repeated mistakes, known debt, fragile areas | Claude (Agent) — needs codebase access |
-| **The Newcomer** | "You've never seen this project before today. Read the description and point out everything that's unclear, assumed, or hand-waved. You succeed when you find the gaps everyone else is too close to see." | Assumptions, unclear requirements, knowledge silos | External LLM preferred (genuinely naive) |
+#### Optional roles for launches, pricing, or trust-sensitive products
 
-### Prompt Template for Each Agent
+| Role | Use when |
+|---|---|
+| **Reviewer / Critic** | reviews, social proof, word of mouth, public narrative matter |
+| **Privacy / Trust Prosecutor** | permissions, cloud processing, billing, file mutations, surveillance vibes, or consent issues matter |
 
-```
+For small exercises, combine Historian + Newcomer. For launch-critical exercises, split them.
+
+### Prompt requirements for every role
+
+Every role gets the same scenario briefing plus a unique mandate.
+
+Each agent should be told to produce **5-8 concrete failure reasons** and, for each reason, include:
+1. **What goes wrong** — one sentence
+2. **Chain of events** — 2-4 sentences
+3. **User experience** — what the user sees, thinks, feels, or does next
+4. **Why the team misses it** — the blind spot or false assumption
+5. **Likelihood × impact** — high/medium/low × catastrophic/major/minor
+6. **Trust damage** — high/medium/low
+7. **Recoverability** — easy/moderate/hard
+8. **Earliest signal** — what would have shown up first
+
+And end with:
+> The failure nobody wants to talk about: [one brutally honest prediction]
+
+### Prompt template
+
+```text
 === PROJECT PRE-MORTEM ===
 
-[Scenario briefing from Phase 1]
+[scenario briefing]
 
-YOUR MANDATE: [mandate from roster]
+YOUR MANDATE: [role-specific mandate]
 
-FAILURE CATEGORIES to consider: [categories from roster]
+You are not here to be balanced. Argue strongly from your assigned position.
+The synthesis step will handle balance.
 
 INSTRUCTIONS:
-1. The failure is CERTAIN — it already happened. Do not question this.
-2. Write 5-8 specific, concrete reasons why it failed.
-3. For each reason:
-   - State what went wrong (one sentence)
-   - Explain the chain of events that led to it (2-3 sentences)
-   - Rate: likelihood (high/medium/low) × impact (catastrophic/major/minor)
-4. Be specific to THIS project, not generic risks.
-5. Uncomfortable truths are the whole point. Hold nothing back.
-6. End with: "The one failure nobody wants to talk about: [your most uncomfortable prediction]"
+1. The failure is CERTAIN. It already happened.
+2. Write 5-8 specific, project-specific reasons it failed.
+3. For each reason include:
+   - What goes wrong
+   - Chain of events
+   - User experience: what the user notices, concludes, and does next
+   - Why the team misses it
+   - Likelihood × impact
+   - Trust damage
+   - Recoverability
+   - Earliest signal / tripwire
+4. Prefer subtle risks over obvious boilerplate.
+5. Focus on failures that damage product success, not just code correctness.
+6. Hold nothing back.
 
-FORMAT your response as a numbered list. No preamble, no hedging.
+FORMAT: numbered list. No preamble. No hedging.
 ```
 
-### Execution: Full Diversity Mode (external LLMs available)
+### Execution guidance
 
-Use the fan-out script for external agents, plus Claude Agent tool for Saboteur and Historian:
+Use **real parallelism**.
 
-```bash
-# Write scenario to temp file
-echo "[scenario briefing]" > /tmp/pre-mortem-scenario.txt
+- Spawn Claude subagents for code-aware roles.
+- Use the fan-out script for external / outsider roles.
+- Do all launches in one turn when possible.
+- While agents run, do local work: map moments of truth, note trust surfaces, and gather evidence from code/docs.
 
-# Run external agents in parallel (handles detection + assignment)
-bash ${SKILL_DIR}/scripts/fan-out.sh /tmp/pre-mortem-scenario.txt /tmp/pre-mortem-output/
-```
+If using subagents, prefer this split:
+- **Saboteur** — code-aware Claude subagent
+- **Historian** — code-aware Claude subagent
+- **Customer / Support / Pessimist / Accountant / Newcomer / Critic / Trust Prosecutor** — external LLMs or additional subagents
 
-Simultaneously spawn Claude agents via Agent tool:
-```
-Agent(subagent_type="general-purpose", prompt="[saboteur prompt + instruction to read codebase]")
-Agent(subagent_type="general-purpose", prompt="[historian prompt + instruction to search git/docs]")
-```
+## Phase 4: Synthesis — Rank by Product Damage, Not Just Technical Damage
 
-**All calls in ONE message** for true parallelism.
+Do not merely deduplicate into a flat list. Use a stronger severity lens.
 
-### Execution: Claude-Only Mode (no external LLMs)
+### Deduplicate into failure families
 
-Spawn **all 6 roles as separate Claude Agent subagents** in a single message. To maximize divergence when using the same model:
+Merge overlapping findings into a single risk when they share the same failure mechanism. Keep separate entries when the same bug creates different product outcomes.
 
-1. **Vary the cognitive framing** — each agent gets a different thinking style:
-   - Saboteur: "Think like a chaos engineer. What breaks under load, at scale, at 3am?"
-   - Customer: "Think like someone who just downloaded this and has 30 seconds of patience."
-   - Accountant: "Think like a CFO reviewing a project that's over budget. Every dollar counts."
-   - Pessimist: "Think like Murphy's Law personified. Everything that can go wrong, will."
-   - Historian: "Think like a detective. Search the codebase for evidence of past problems." (give codebase access)
-   - Newcomer: "Think like a new hire on day one. What's confusing? What's undocumented?"
+### For each risk, judge these dimensions
 
-2. **Use different Agent model hints** where possible:
-   - Saboteur, Historian: `model: "opus"` (deep analysis, codebase access)
-   - Customer, Newcomer: `model: "sonnet"` (faster, different perspective)
-   - Accountant, Pessimist: `model: "haiku"` (constrained, forces prioritization)
+| Dimension | What to ask |
+|---|---|
+| **Frequency / exposure** | How many users or sessions are likely to hit this? |
+| **User harm / friction** | How bad is the user’s immediate experience? |
+| **Trust fracture** | Does this feel creepy, careless, deceptive, or file-breaking? |
+| **Detectability lag** | Will the team know quickly, or only after damage spreads? |
+| **Recoverability** | Can the user easily undo it and regain confidence? |
+| **Support burden** | How expensive is it to diagnose and resolve? |
+| **Business drag** | Does it hurt retention, reviews, conversion, margins, or founder sanity? |
 
-3. **Mandate independence** — each agent prompt must include: "Do NOT try to be balanced. Argue strongly from your assigned position. The synthesis step handles balance."
+### Severity heuristics
 
-**If an external AI or subagent fails**, note it and continue — 4+ perspectives is still valuable.
+Use these rules of thumb:
+- A risk can be **critical** even if the bug is small, if it causes **trust loss, silent failure, or irreversible user damage**.
+- A risk can be **critical** even if uncommon, if the outcome is **embarrassing, privacy-sensitive, destructive, or review-fuel**.
+- A risk should be upgraded if it is **hard to detect**, **hard to recover from**, or **likely to create messy support loops**.
+- A technically severe issue may be downgraded if users never feel it and recovery is trivial.
+- If you would be ashamed to explain the failure to an angry user, take it seriously.
 
-## Phase 3: Round-Robin Synthesis
+### Explicitly look for these subtle patterns
 
-Once all agents have responded, run a **cross-pollination round**. This mimics Klein's round-robin where team members hear each other's ideas and add what was missed.
+- silent degradation that looks like “the app is dead”
+- defaults that feel reasonable to the builder but reckless to the user
+- ambiguity in status, billing, permissions, or what data leaves the machine
+- features that work for the founder’s setup but not the user’s reality
+- failure recovery that technically exists but is too buried to matter
+- review or support narratives that compress many bugs into one simple story: “flaky”, “creepy”, “not worth it”, “broke my files”, “too much setup”
+- founder-tax risks where the product could be good, but the support burden kills the business
 
-Use Claude (the strongest available model) to synthesize:
+## Phase 5: Present Results in a Richer Report
 
-```
-You are the pre-mortem facilitator. Six team members independently identified failure modes
-for this project:
-
-=== THE SABOTEUR (Technical) ===
-[paste output]
-
-=== THE CUSTOMER (User Experience) ===
-[paste output]
-
-=== THE ACCOUNTANT (Cost & Timeline) ===
-[paste output]
-
-=== THE PESSIMIST (External & Dependencies) ===
-[paste output]
-
-=== THE HISTORIAN (Past Patterns) ===
-[paste output]
-
-=== THE NEWCOMER (Assumptions & Gaps) ===
-[paste output]
-
-YOUR TASK:
-1. DEDUPLICATE: Merge overlapping concerns into single items.
-2. CROSS-POLLINATE: Identify failure chains that span multiple perspectives
-   (e.g., a technical risk that causes a user experience disaster that causes budget overrun).
-3. RANK by (likelihood × impact). Use a 2x2 matrix:
-   - 🔴 HIGH likelihood × HIGH impact = Must address before proceeding
-   - 🟠 HIGH likelihood × LOW impact OR LOW likelihood × HIGH impact = Plan mitigation
-   - 🟡 LOW likelihood × LOW impact = Acknowledge and monitor
-4. For EACH 🔴 and 🟠 risk, propose a CONCRETE mitigation:
-   - What specific action prevents or reduces this risk?
-   - Who should own it? (role, not person name)
-   - When should it be done? (before X milestone)
-   - What's the **tripwire indicator** — the earliest observable signal that this risk is materializing? (e.g., "API response times exceed 500ms in staging" or "3+ users report confusion in the same flow")
-5. OUTPUT FORMAT below.
-```
-
-## Phase 4: Present Results
-
-Present the final pre-mortem report to the user in this format:
+Use this structure:
 
 ```markdown
-# Pre-Mortem: [Project Name]
-_"It's [future date]. [Project] launched and failed. Here's what went wrong."_
+# Pre-Mortem: [Project]
+_"It is [future date]. [Project] launched, and the launch went badly. Here's what actually sank it."_
 
-## 🔴 Critical Risks (Must Address)
+## Executive Read
+- **Core failure story:** [1-2 sentence summary]
+- **Biggest product risk:** [single risk]
+- **Biggest trust risk:** [single risk]
+- **Biggest founder-tax risk:** [single risk]
 
-### 1. [Risk Title]
+## Moments of Truth Most Likely to Break
+- [moment] → [how it fails]
+- [moment] → [how it fails]
+
+## 🔴 Critical Risks (Must Address Before Launch)
+
+### 1. [Risk title]
 **What goes wrong:** [one sentence]
-**Chain of events:** [how it unfolds]
-**Likelihood:** High | **Impact:** Catastrophic/Major
-**Sources:** Saboteur, Customer (agreement = high confidence)
+**How users experience it:** [what they see, infer, and do]
+**Chain of events:** [mechanism]
+**Why the team misses it:** [blind spot]
+**Likelihood:** High/Medium/Low  
+**Impact:** Catastrophic/Major/Minor  
+**Trust damage:** High/Medium/Low  
+**Recoverability:** Easy/Moderate/Hard
+**Why this threatens product success:** [retention/reviews/support/revenue/founder sanity]
+**Sources:** [roles that independently surfaced it]
 **Mitigation:** [specific action] → Owner: [role] → By: [milestone]
-**Tripwire:** [earliest observable signal this risk is activating]
-
-### 2. ...
+**Tripwire:** [earliest observable signal]
 
 ## 🟠 Significant Risks (Plan Mitigation)
+[Same structure, more compact if needed]
 
-### 3. [Risk Title]
-...
-
-## 🟡 Watch List (Monitor)
-
-- [Risk]: [one-line description]
-- ...
+## 🟡 Watch List
+- [Risk] — [why to monitor]
 
 ## Cross-Cutting Themes
-[2-3 sentences about failure patterns that appeared across multiple agents]
+- [theme]
+- [theme]
+- [theme]
+
+## The User’s Emotional Reality
+- What early adopters expected:
+- What failure made them feel:
+- What story they tell other people afterward:
 
 ## The Uncomfortable Truth
-[The single most important thing nobody wants to hear, synthesized from all agents' "uncomfortable predictions"]
+[The thing nobody wants to say out loud]
 
 ## Recommended Next Steps
-1. [ ] [Action item with owner and deadline]
-2. [ ] ...
-3. [ ] ...
+1. [ ] [Action]
+2. [ ] [Action]
+3. [ ] [Action]
 ```
 
-## Phase 5: User Discussion
+## Phase 6: Discussion and Follow-Through
 
-After presenting, ask:
+After presenting, ask briefly:
+> Which of these feels most real? Which one would actually make users lose trust? Want me to turn the top mitigations into tasks, or run a deeper drill-down on one failure family?
 
-> "Which of these feel most real to you? Anything missing that your gut tells you about?
-> Want me to deep-dive any specific risk, or shall we turn the mitigations into plan items?"
+If useful, offer one follow-up mode:
+- **Mitigation plan** — turn the top risks into tasks or plan updates
+- **Deep drill-down** — one risk gets a full fault tree
+- **Narrative test** — simulate angry reviews, support emails, or churn reasons
 
-If the user identifies additional risks, add them to the report. If they want to proceed, offer to:
-- Add mitigations as tasks/beads
-- Update an existing plan with risk-aware adjustments
-- Save the report to Obsidian for reference
+## Variants
+
+### Sprint / Feature pre-mortem
+Use 4 roles: Saboteur, Customer Advocate, Pessimist, Historian. Ask for 3-5 risks each. Skip optional roles.
+
+### Launch / GTM pre-mortem
+Add Reviewer / Critic and Privacy / Trust Prosecutor. Emphasize onboarding, pricing, trust, support, and review narratives.
+
+### Architecture pre-mortem
+Heavier weight on Saboteur, Historian, Operator. Add failure chains, scaling assumptions, integration fragility, rollback story, and observability gaps.
+
+### Solo-founder utility app pre-mortem
+Always include support burden, trust fracture, and founder-tax in synthesis. Many “small” bugs are existential here.
+
+## Complementary Exercises
+
+Pre-mortems are strong, but not enough by themselves. Good follow-ups:
+- **Kill shot review** — each agent proposes the single killer objection that would stop adoption
+- **Support inbox simulation** — agents write the support emails and reviews you would receive after launch
+- **Trust audit** — focus only on permissions, privacy, consent, billing, and file-safety perception
+- **First-run walkthrough red team** — simulate minute-by-minute onboarding and first-use confusion
+- **Founder-tax audit** — identify the risks that will not kill users, but will kill the business by exhausting support time or margins
+- **Post-launch narrative simulation** — predict the one-sentence public story people will tell about the product
+
+Use these when the plain pre-mortem still feels too abstract.
 
 </process>
-
-## Sprint-Level Variant (Compressed)
-
-For sprint planning or smaller features where a full 6-agent pre-mortem is overkill:
-
-1. **3 agents only:** Saboteur (technical), Customer (UX), Pessimist (dependencies)
-2. **3 failures each** instead of 5-8
-3. **Skip the fan-out script** — run all 3 as Claude subagents
-4. **Synthesis is a simple ranked list** — no elaborate report format
-5. **5-10 minutes total** instead of 20-30
-
-Use when: sprint items, well-scoped features, incremental changes. Use the full version for: new projects, architecture decisions, launches.
 
 <anti_patterns>
 
 ## Anti-Patterns
 
-| Don't | Do Instead |
-|-------|-----------|
-| Use generic risks ("the timeline might slip") | Be specific to THIS project ("the Ollama integration has no timeout handling and will hang the queue") |
-| Let agents be polite or hedging | Mandate uncomfortable honesty — that's the whole point |
-| Skip the emotional scenario setup | The certainty framing is what activates prospective hindsight |
-| Run agents sequentially | Parallel execution — all 6 in one message |
-| Present a flat list of risks | Rank by likelihood × impact, group by severity |
-| Identify risks without mitigations | Every 🔴 and 🟠 gets a concrete action |
-| Use the same prompt style for all agents | Vary cognitive framing, model hints, and mandates for divergence |
-| Ask "what could go wrong?" | Say "it failed — what went wrong?" (certainty, not speculation) |
+| Don't | Do instead |
+|---|---|
+| Produce generic risks | Tie each risk to the actual product, audience, workflow, and launch context |
+| Treat technical severity as the only severity | Evaluate trust, recoverability, support burden, and business drag |
+| Forget the user’s emotional reaction | Include what users see, conclude, and do next |
+| Stop at “could fail” | Explain the chain of events and why the team misses it |
+| Generate a giant undifferentiated list | Deduplicate into risk families and rank them |
+| Ignore support / ops realities | Include founder-tax and diagnostic complexity |
+| Treat outsider perspectives as optional fluff | Use them to catch expectation mismatch and public narrative risk |
+| End without tripwires | Every important risk needs an early signal |
 
 </anti_patterns>
 
 <success_criteria>
 
 Pre-mortem is complete when:
-- [ ] 5+ agents contributed independent failure analyses
-- [ ] Results are deduplicated, cross-pollinated, and ranked
-- [ ] Every critical/significant risk has a concrete mitigation with owner and timing
-- [ ] The "uncomfortable truth" has been surfaced
-- [ ] User has reviewed and added any gut-feel risks
-- [ ] Next steps are clear (plan updates, tasks, or documented for reference)
+- [ ] multiple independent perspectives contributed materially different risks
+- [ ] the top risks are specific, not boilerplate
+- [ ] user experience and trust damage are explicit in the ranking
+- [ ] support burden and business drag are visible, not implicit
+- [ ] every major risk has a mitigation, owner, timing, and tripwire
+- [ ] at least one genuinely uncomfortable truth surfaced
+- [ ] the user can immediately decide what to fix first
 
 </success_criteria>
