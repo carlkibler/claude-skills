@@ -1,13 +1,11 @@
 ---
 name: run
-description: Use when completing complex implementations, making design decisions, or needing validation from different AI perspectives before committing major changes. Invokes GitHub Copilot CLI with gpt-5.3-codex for code review, architecture validation, and pre-merge checks.
+description: Use when completing complex implementations, making design decisions, or needing validation from a different AI perspective before committing major changes. Detects available code agents and routes to the best one found.
 ---
 
-# Getting Second Opinions
+# Second Opinions
 
-Use GitHub Copilot CLI to validate work with a different model architecture before committing.
-
-**Core insight:** You and the user share the same blind spots — you're the same model family, trained on the same data. A different architecture catches different things.
+Get validation from a different AI before committing. You and the user share the same blind spots — you're the same model, trained on the same data. A different architecture catches different things.
 
 ## When to Use
 
@@ -19,35 +17,54 @@ Use GitHub Copilot CLI to validate work with a different model architecture befo
 
 **Skip for:** trivial fixes, style questions, crystal-clear requirements
 
-## How
+## Agent Detection
+
+Check what's available, in priority order:
+
+```bash
+command -v opencode   # opencode
+command -v codex      # OpenAI Codex CLI
+gh copilot --version  # GitHub Copilot CLI (gh extension)
+command -v aider      # aider
+command -v amp        # Amp
+```
+
+Use the first one found. If none are available, tell the user and skip this step.
+
+## How to Ask
+
+The prompt is the same regardless of agent — adapt the invocation to whatever's available.
 
 ### Pre-Merge Review (Most Common)
 
-```bash
-copilot --model gpt-5.3-codex --allow-read-tools --prompt "Review my git changes for production readiness.
+Show the diff and ask for a production-readiness check:
 
-Show me the diff from main branch and check for:
+```
+Review my git changes for production readiness.
+
+Show the diff from main and check for:
 - Correctness and edge cases
 - Architecture and design
 - Performance implications
-- Security concerns"
+- Security concerns
 ```
+
+**opencode:** `opencode "[prompt]"`
+**codex:** `codex "[prompt]"`
+**gh copilot:** `gh copilot suggest -t shell "[prompt]"` or use `--allow-read-tools` if available
+**aider:** `aider --message "[prompt]"`
 
 ### Design Decision Validation
 
-```bash
-copilot --model gpt-5.3-codex --allow-read-tools --prompt "[Describe the options and constraints. Ask: What trade-offs am I not seeing?]"
-```
+Describe the options and constraints, then ask: *What trade-offs am I not seeing?*
 
 ### Targeted Question
 
-```bash
-copilot --model gpt-5.3-codex --prompt "[Specific question about the implementation]"
-```
+Ask one specific question about the implementation — don't fish for general feedback.
 
 ## Interpreting Results
 
-Copilot is a **collaborator, not an authority.** Classify each piece of feedback:
+The other agent is a **collaborator, not an authority.** Classify each piece of feedback:
 
 | Category | Action |
 |----------|--------|
@@ -56,17 +73,7 @@ Copilot is a **collaborator, not an authority.** Classify each piece of feedback
 | **Nice-to-have** | Alternative approach, style preference → mention to user |
 | **Reject** | Over-engineering, conflicts with project conventions → skip with reason |
 
-If Copilot and your analysis disagree, explain the disagreement to the user and let them decide.
-
-## Available Models
-
-**Primary:** `gpt-5.3-codex` — specialized for code analysis, the strongest reviewer available
-
-**Fallbacks** (if gpt-5.3-codex is unavailable):
-- `gpt-5` — general-purpose, still strong
-- `claude-sonnet-4.6` — different architecture, good for diversity of perspective
-
-**Detection:** If `copilot` command is not available, tell the user to install GitHub Copilot CLI (`gh extension install github/gh-copilot`) or skip this step.
+If the other agent and your analysis disagree, explain the disagreement to the user and let them decide.
 
 ## The Red Flags
 
