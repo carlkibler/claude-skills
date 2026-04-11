@@ -108,7 +108,7 @@ If the project appears to contain proprietary code, customer data, secrets, or r
 If using external LLM CLIs, detect them first:
 
 ```bash
-bash ${SKILL_DIR}/scripts/detect-llms.sh
+bash scripts/detect-llms.sh
 ```
 
 Modes:

@@ -12,7 +12,7 @@ Uses a self-contained `uv run` Python script — no pre-installed packages neede
 ## Usage
 
 ```bash
-uv run "${CLAUDE_SKILL_DIR}/generate-wifi-qr.py" \
+uv run generate-wifi-qr.py \
   --ssid "My Network" \
   --password "s3cr3t" \
   --output /path/to/wifi-qr.png

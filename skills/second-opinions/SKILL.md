@@ -22,7 +22,7 @@ Get validation from a different AI before committing. You and the user share the
 Use the shared detection script from the `pre-mortem` skill if available, otherwise fall back to manual probing:
 
 ```bash
-bash "${CLAUDE_SKILL_DIR}/scripts/detect-llms.sh" --quiet
+bash scripts/detect-llms.sh --quiet
 ```
 
 Use the first one found. If none are available, tell the user and skip this step.
