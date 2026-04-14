@@ -78,7 +78,7 @@ Identify the issues that are worst because they are:
 - rare but emotionally explosive
 - difficult to distinguish from user error
 - impossible to resolve without diagnostics the product does not collect
-- repetitive enough to become founder-tax
+- repetitive enough to become maintenance drag
 
 ## Step 5: Present the simulation
 
@@ -132,7 +132,7 @@ Use this format:
 The simulation is successful when it makes support feel painfully concrete and identifies:
 - what users will actually say
 - what facts support will be missing
-- which issues become founder-tax
+- which issues become maintenance drag
 - which single diagnostics or UX fix would cut the burden most
 
 </process>

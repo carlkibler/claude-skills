@@ -139,7 +139,7 @@ Use **6 core roles** minimum. Add **specialized roles** for high-stakes launches
 | **Saboteur** | Technical breakage, silent failure, ugly edge cases, brittle integrations | Cold glee — enjoys finding the seam that tears |
 | **Customer Advocate** | Confusing UX, violated expectations, trust damage, "I hate this app" moments | Protective anger — speaks for the user who deserved better |
 | **Support Lead** | Opaque, repetitive, emotionally draining support archaeology | Exhausted resignation — has seen this exact ticket before |
-| **Operator / Accountant** | Cost, margin erosion, maintenance burden, abuse, founder-tax, process fragility | Dry alarm — watching the numbers quietly get worse |
+| **Operator / Accountant** | Cost, margin erosion, maintenance burden, abuse, maintenance drag, process fragility | Dry alarm — watching the numbers quietly get worse |
 | **Pessimist** | Dependency failures, platform shifts, timing, distribution, domino effects | Grim satisfaction — told you so, saw it coming |
 | **Historian** | What docs/code already warned about, what insiders forgot to explain, what failed at similar products | Mournful clarity — this was all in the record |
 
@@ -301,7 +301,7 @@ Use these rules of thumb:
 - failure recovery that technically exists but is too buried to matter
 - emotional injuries that users can't articulate — they just stop using it
 - review or support narratives that compress many bugs into one simple story: "flaky", "creepy", "not worth it", "broke my files", "too much setup"
-- founder-tax risks where the product could be good, but the support burden kills the business
+- maintenance drag risks where the product could be good, but the support burden kills the business
 - insider assumptions that the Outsider or Devil's Advocate spotted but the technical roles missed
 
 ## Phase 5: Present Results — Two Documents
@@ -319,7 +319,7 @@ _"It is [future date]. [Project] launched, and the launch went badly. Here's wha
 - **Biggest product risk:** [single risk]
 - **Biggest trust risk:** [single risk]
 - **Biggest emotional injury risk:** [single risk — the one that breaks the relationship]
-- **Biggest founder-tax risk:** [single risk]
+- **Biggest maintenance drag risk:** [single risk]
 
 ## Moments of Truth Most Likely to Break
 - [moment] → [how it fails] → [what the user feels]
@@ -460,7 +460,7 @@ Add Reviewer / Critic, Privacy / Trust Prosecutor, Emotional Witness, and Devil'
 Heavier weight on Saboteur, Historian, Operator, Burned Expert. Add failure chains, scaling assumptions, integration fragility, rollback story, and observability gaps.
 
 ### Solo-founder utility app pre-mortem
-Always include support burden, trust fracture, Emotional Witness, and founder-tax in synthesis. Many "small" bugs are existential here.
+Always include support burden, trust fracture, Emotional Witness, and maintenance drag in synthesis. Many "small" bugs are existential here.
 
 ## Complementary Exercises
 
@@ -469,7 +469,7 @@ Pre-mortems are strong, but not enough by themselves. Good follow-ups:
 - **Support inbox simulation** — agents write the support emails and reviews you would receive after launch
 - **Trust audit** — focus only on permissions, privacy, consent, billing, and file-safety perception
 - **First-run walkthrough red team** — simulate minute-by-minute onboarding and first-use confusion
-- **Founder-tax audit** — identify the risks that will not kill users, but will kill the business by exhausting support time or margins
+- **Maintenance drag audit** — identify the risks that will not kill users, but will kill the business by exhausting support time or margins
 - **Post-launch narrative simulation** — predict the one-sentence public story people will tell about the product
 
 Use these when the plain pre-mortem still feels too abstract.
@@ -487,7 +487,7 @@ Use these when the plain pre-mortem still feels too abstract.
 | Forget the user's emotional reaction | Include the specific emotion at the moment of failure — not just "frustrated" |
 | Stop at "could fail" | Explain the chain of events and why the team misses it |
 | Generate a giant undifferentiated list | Deduplicate into risk families and rank them |
-| Ignore support / ops realities | Include founder-tax and diagnostic complexity |
+| Ignore support / ops realities | Include maintenance drag and diagnostic complexity |
 | Treat outsider perspectives as optional fluff | Use them to catch expectation mismatch and public narrative risk |
 | End without tripwires | Every important risk needs an early signal |
 | Name the running agent in prompts | Use role names, not "Claude" or "Gemini" — any agent might be running this |
