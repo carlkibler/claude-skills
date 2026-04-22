@@ -1,3 +1,8 @@
+---
+name: agent-skills-claude
+description: "Shared skill collection conventions for Claude Code and Codex. Source of truth for structure, scripts, and distribution."
+---
+
 # CLAUDE.md
 
 Shared skill collection for Claude Code and Codex.

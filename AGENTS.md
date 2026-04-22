@@ -1,3 +1,8 @@
+---
+name: agent-skills-agents
+description: "Compatibility shim pointing to CLAUDE.md. Source of truth for multi-agent skill conventions."
+---
+
 # AGENTS.md
 
 > **Source of truth: [CLAUDE.md](./CLAUDE.md)**

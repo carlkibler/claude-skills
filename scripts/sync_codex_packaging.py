@@ -97,7 +97,7 @@ SKILL_CONFIG = {
         "local_only": False,
         "group": "Better Products",
         "usage": "/trust-audit:run",
-        "summary": "Audit permissions, privacy, billing, and silent failures for creepiness",
+        "summary": "Audit a product's trust surface: permissions, privacy, billing, and silent failures",
     },
     "wifi-qr": {
         "display_name": "WiFi QR",
@@ -198,10 +198,11 @@ def build_skills_section(rows: dict[str, list[dict[str, str]]]) -> str:
         intro = intros[group]
         if intro:
             parts.append(f"{intro}\n")
-        parts.append("| Plugin name | Skill | Description |")
-        parts.append("|-------------|-------|-------------|")
+        parts.append("| Skill | |")
+        parts.append("|-------|---|")
         for row in rows[group]:
-            parts.append(f"| `{row['name']}` | `{row['usage']}` | {row['summary']} |")
+            install = f"`/plugin install {row['name']}@carl-tools`"
+            parts.append(f"| **{row['name']}** | {row['summary']}<br><sub>{install}</sub> |")
         parts.append("")
     return "\n".join(parts).rstrip() + "\n"
 

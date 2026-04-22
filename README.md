@@ -1,3 +1,8 @@
+---
+name: agent-skills-readme
+description: "Agent Skills collection README. Installation and usage guide for Claude Code and Codex skills."
+---
+
 # agent-skills
 
 Claude Code and Codex skills for multi-agent workflows, PR automation, product analysis, and more.
@@ -15,9 +20,9 @@ Add this repo as a Claude Code marketplace:
 Then install individual skills:
 
 ```
-/plugin install pre-mortem@agent-skills
-/plugin install handle-pr@agent-skills
-/plugin install trust-audit@agent-skills
+/plugin install pre-mortem@carl-tools
+/plugin install handle-pr@carl-tools
+/plugin install trust-audit@carl-tools
 ```
 
 Or browse and install from the UI: run `/plugin` → **Discover** tab.
@@ -33,7 +38,7 @@ This repo now includes native Codex integration in two forms:
 
 To use the skills directly from a checked-out repo, open the repo in Codex and type `$` or `/skills`. Codex will discover the skills from `.agents/skills` automatically.
 
-To test the packaged Codex plugins locally, restart Codex after cloning the repo, open the plugin directory, and look for the **Agent Skills** local marketplace sourced from this repo.
+To test the packaged Codex plugins locally, restart Codex after cloning the repo, open the plugin directory, and look for the **Carl Tools** local marketplace sourced from this repo.
 
 ### Codex web / cloud
 
@@ -61,46 +66,46 @@ Or just ask naturally — Claude will invoke the right skill based on context.
 
 Find failure modes, trust problems, and support burden before your users do.
 
-| Plugin name | Skill | Description |
-|-------------|-------|-------------|
-| `empathy-audit` | `/empathy-audit:run` | Four-lens empathy review: user, machine, developer, support |
-| `first-run-red-team` | `/first-run-red-team:run` | Red-team onboarding and first-run experience for abandonment traps |
-| `pre-mortem` | `/pre-mortem:run` | Multi-agent project pre-mortem — ranked risks with mitigations |
-| `support-inbox-simulation` | `/support-inbox-simulation:run` | Simulate the support emails and refunds a launch will generate |
-| `trust-audit` | `/trust-audit:run` | Audit permissions, privacy, billing, and silent failures for creepiness |
+| Skill | |
+|-------|---|
+| **empathy-audit** | Four-lens empathy review: user, machine, developer, support<br><sub>`/plugin install empathy-audit@carl-tools`</sub> |
+| **first-run-red-team** | Red-team onboarding and first-run experience for abandonment traps<br><sub>`/plugin install first-run-red-team@carl-tools`</sub> |
+| **pre-mortem** | Multi-agent project pre-mortem — ranked risks with mitigations<br><sub>`/plugin install pre-mortem@carl-tools`</sub> |
+| **support-inbox-simulation** | Simulate the support emails and refunds a launch will generate<br><sub>`/plugin install support-inbox-simulation@carl-tools`</sub> |
+| **trust-audit** | Audit a product's trust surface: permissions, privacy, billing, and silent failures<br><sub>`/plugin install trust-audit@carl-tools`</sub> |
 
 ### Dev Workflow
 
 Tools for the day-to-day of writing and reviewing code.
 
-| Plugin name | Skill | Description |
-|-------------|-------|-------------|
-| `handle-pr` | `/handle-pr:run` | Autonomously address PR review comments end-to-end |
-| `parallel-isolated-app-testing` | `/parallel-isolated-app-testing:run` | Design parallel isolated test lanes for apps with shared local state |
-| `second-opinions` | `/second-opinions:run` | Get a second opinion from a different AI on complex changes |
+| Skill | |
+|-------|---|
+| **handle-pr** | Autonomously address PR review comments end-to-end<br><sub>`/plugin install handle-pr@carl-tools`</sub> |
+| **parallel-isolated-app-testing** | Design parallel isolated test lanes for apps with shared local state<br><sub>`/plugin install parallel-isolated-app-testing@carl-tools`</sub> |
+| **second-opinions** | Get a second opinion from a different AI on complex changes<br><sub>`/plugin install second-opinions@carl-tools`</sub> |
 
 ### Utilities
 
-| Plugin name | Skill | Description |
-|-------------|-------|-------------|
-| `chezmoi-drift` | `/chezmoi-drift:run` | Audit chezmoi dotfiles for drift and broken skill installs |
-| `profile-me` | `/profile-me:run` | Build a portable AI profile from your digital footprint |
-| `wifi-qr` | `/wifi-qr:run` | Generate a WiFi QR code PNG |
+| Skill | |
+|-------|---|
+| **chezmoi-drift** | Audit chezmoi dotfiles for drift and broken skill installs<br><sub>`/plugin install chezmoi-drift@carl-tools`</sub> |
+| **profile-me** | Build a portable AI profile from your digital footprint<br><sub>`/plugin install profile-me@carl-tools`</sub> |
+| **wifi-qr** | Generate a WiFi QR code PNG<br><sub>`/plugin install wifi-qr@carl-tools`</sub> |
 
 ## Managing plugins
 
 ```
 # Disable without uninstalling
-/plugin disable handle-pr@agent-skills
+/plugin disable handle-pr@carl-tools
 
 # Re-enable
-/plugin enable handle-pr@agent-skills
+/plugin enable handle-pr@carl-tools
 
 # Uninstall
-/plugin uninstall handle-pr@agent-skills
+/plugin uninstall handle-pr@carl-tools
 
 # Update marketplace listings
-/plugin marketplace update agent-skills
+/plugin marketplace update carl-tools
 ```
 
 ## Generated vs hand-edited files
@@ -144,7 +149,7 @@ Install at user scope (default, available across all projects) or project scope:
 
 ```
 # Project scope — adds to .claude/settings.json, shared with team
-claude plugin install pre-mortem@agent-skills --scope project
+claude plugin install pre-mortem@carl-tools --scope project
 ```
 
 ## Pre-configure for a team
@@ -154,7 +159,7 @@ Add to your project's `.claude/settings.json` to prompt teammates to install on 
 ```json
 {
   "extraKnownMarketplaces": {
-    "agent-skills": {
+    "carl-tools": {
       "source": {
         "source": "github",
         "repo": "carlkibler/agent-skills"
