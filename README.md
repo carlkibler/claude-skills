@@ -1,11 +1,7 @@
----
-name: agent-skills-readme
-description: "Agent Skills collection README. Installation and usage guide for Claude Code and Codex skills."
----
+# LLM Agent Skills
 
-# agent-skills
-
-Claude Code and Codex skills for multi-agent workflows, PR automation, product analysis, and more.
+Skills developed by Carl Kibler to build better products and some random tasks. 
+Should work in Claude Code, Codex, and others.
 
 ## Install
 
@@ -17,15 +13,18 @@ Add this repo as a Claude Code marketplace:
 /plugin marketplace add carlkibler/agent-skills
 ```
 
-Then install individual skills:
+**Start with these two — you won't be disappointed:**
 
 ```
 /plugin install pre-mortem@carl-tools
-/plugin install handle-pr@carl-tools
-/plugin install trust-audit@carl-tools
+/plugin install empathy-audit@carl-tools
 ```
 
-Or browse and install from the UI: run `/plugin` → **Discover** tab.
+**`/pre-mortem:run`** — Point it at any project or idea. Parallel agents attack it from different failure angles and return a ranked, concrete list of what will actually kill the launch.
+
+**`/empathy-audit:run`** — Run it on any feature after you think it's done. Reviews through four lenses (user, machine, developer, support) and surfaces what "works" but shouldn't ship.
+
+Or install anything from the full list below, or browse via `/plugin` → **Discover** tab.
 
 After installing, run `/reload-plugins` to activate.
 
@@ -54,8 +53,7 @@ Skills are namespaced by plugin name. Invoke directly or let Claude trigger them
 
 ```
 /pre-mortem:run
-/handle-pr:run
-/trust-audit:run
+/empathy-audit:run
 ```
 
 Or just ask naturally — Claude will invoke the right skill based on context.
@@ -64,15 +62,15 @@ Or just ask naturally — Claude will invoke the right skill based on context.
 
 ### Better Products
 
-Find failure modes, trust problems, and support burden before your users do.
+Find failure modes and support burden before your users do.
 
 | Skill | |
 |-------|---|
-| **empathy-audit** | Four-lens empathy review: user, machine, developer, support<br><sub>`/plugin install empathy-audit@carl-tools`</sub> |
-| **first-run-red-team** | Red-team onboarding and first-run experience for abandonment traps<br><sub>`/plugin install first-run-red-team@carl-tools`</sub> |
-| **pre-mortem** | Multi-agent project pre-mortem — ranked risks with mitigations<br><sub>`/plugin install pre-mortem@carl-tools`</sub> |
-| **support-inbox-simulation** | Simulate the support emails and refunds a launch will generate<br><sub>`/plugin install support-inbox-simulation@carl-tools`</sub> |
-| **trust-audit** | Audit a product's trust surface: permissions, privacy, billing, and silent failures<br><sub>`/plugin install trust-audit@carl-tools`</sub> |
+| **empathy-audit** | Four-lens empathy review: user, machine, developer, support<br>`/plugin install empathy-audit@carl-tools` |
+| **first-run-red-team** | Red-team onboarding and first-run experience for abandonment traps<br>`/plugin install first-run-red-team@carl-tools` |
+| **pre-mortem** | Multi-agent project pre-mortem — ranked risks with mitigations<br>`/plugin install pre-mortem@carl-tools` |
+| **support-inbox-simulation** | Simulate the support emails and refunds a launch will generate<br>`/plugin install support-inbox-simulation@carl-tools` |
+| **trust-audit** | Audit a product's trust surface: permissions, privacy, billing, and silent failures<br>`/plugin install trust-audit@carl-tools` |
 
 ### Dev Workflow
 
@@ -80,17 +78,17 @@ Tools for the day-to-day of writing and reviewing code.
 
 | Skill | |
 |-------|---|
-| **handle-pr** | Autonomously address PR review comments end-to-end<br><sub>`/plugin install handle-pr@carl-tools`</sub> |
-| **parallel-isolated-app-testing** | Design parallel isolated test lanes for apps with shared local state<br><sub>`/plugin install parallel-isolated-app-testing@carl-tools`</sub> |
-| **second-opinions** | Get a second opinion from a different AI on complex changes<br><sub>`/plugin install second-opinions@carl-tools`</sub> |
+| **handle-pr** | Autonomously address PR review comments end-to-end<br>`/plugin install handle-pr@carl-tools` |
+| **parallel-isolated-app-testing** | Design parallel isolated test lanes for apps with shared local state<br>`/plugin install parallel-isolated-app-testing@carl-tools` |
+| **second-opinions** | Get a second opinion from a different AI on complex changes<br>`/plugin install second-opinions@carl-tools` |
 
 ### Utilities
 
 | Skill | |
 |-------|---|
-| **chezmoi-drift** | Audit chezmoi dotfiles for drift and broken skill installs<br><sub>`/plugin install chezmoi-drift@carl-tools`</sub> |
-| **profile-me** | Build a portable AI profile from your digital footprint<br><sub>`/plugin install profile-me@carl-tools`</sub> |
-| **wifi-qr** | Generate a WiFi QR code PNG<br><sub>`/plugin install wifi-qr@carl-tools`</sub> |
+| **chezmoi-drift** | Audit chezmoi dotfiles for drift and broken skill installs<br>`/plugin install chezmoi-drift@carl-tools` |
+| **profile-me** | Build a portable AI profile from your digital footprint<br>`/plugin install profile-me@carl-tools` |
+| **wifi-qr** | Generate a WiFi QR code PNG<br>`/plugin install wifi-qr@carl-tools` |
 
 ## Managing plugins
 
