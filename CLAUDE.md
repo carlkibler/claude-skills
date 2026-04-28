@@ -110,8 +110,8 @@ skills/
   ├── handle-pr/                  # Auto-handle PR review comments
   ├── chezmoi-drift/              # Dotfiles drift + shared-skill install audit
   ├── trust-audit/                # Product trust surface audit
-  ├── support-inbox-simulation/   # Pre-launch support email simulation
-  ├── first-run-red-team/         # First-run experience red-teaming
+  ├── support-storm/              # Pre-launch support email simulation
+  ├── first-contact/              # First-run experience red-teaming
   ├── wifi-qr/                    # WiFi QR code generator
-  └── empathy-audit/              # Four-lens empathy review (user, machine, developer, support)
+  └── kindness-check/             # Four-lens empathy review (user, machine, developer, support)
 ```

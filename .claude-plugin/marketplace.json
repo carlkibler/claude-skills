@@ -56,18 +56,18 @@
       "version": "1.0.0"
     },
     {
-      "name": "support-inbox-simulation",
+      "name": "support-storm",
       "description": "Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the product fixes that cut maintenance drag.",
       "source": "./",
-      "skills": ["./skills/support-inbox-simulation"],
+      "skills": ["./skills/support-storm"],
       "category": "productivity",
       "version": "1.0.0"
     },
     {
-      "name": "first-run-red-team",
+      "name": "first-contact",
       "description": "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup.",
       "source": "./",
-      "skills": ["./skills/first-run-red-team"],
+      "skills": ["./skills/first-contact"],
       "category": "security",
       "version": "1.0.0"
     },
@@ -88,10 +88,10 @@
       "version": "1.0.0"
     },
     {
-      "name": "empathy-audit",
+      "name": "kindness-check",
       "description": "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out.",
       "source": "./",
-      "skills": ["./skills/empathy-audit"],
+      "skills": ["./skills/kindness-check"],
       "category": "development",
       "version": "1.0.0"
     }

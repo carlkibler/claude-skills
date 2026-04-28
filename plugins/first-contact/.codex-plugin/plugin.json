@@ -1,0 +1,26 @@
+{
+  "name": "first-contact",
+  "version": "1.0.0",
+  "description": "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "First Contact",
+    "shortDescription": "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup.",
+    "longDescription": "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "developerName": "carlkibler",
+    "category": "Security",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Use the First Contact skill for this task."
+    ],
+    "brandColor": "#10A37F",
+    "composerIcon": "./skills/first-contact/assets/icon.svg",
+    "logo": "./skills/first-contact/assets/icon.svg"
+  }
+}

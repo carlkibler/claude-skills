@@ -17,22 +17,10 @@
       "category": "Productivity"
     },
     {
-      "name": "empathy-audit",
+      "name": "first-contact",
       "source": {
         "source": "local",
-        "path": "./plugins/empathy-audit"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Development"
-    },
-    {
-      "name": "first-run-red-team",
-      "source": {
-        "source": "local",
-        "path": "./plugins/first-run-red-team"
+        "path": "./plugins/first-contact"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -51,6 +39,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "kindness-check",
+      "source": {
+        "source": "local",
+        "path": "./plugins/kindness-check"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
     },
     {
       "name": "parallel-isolated-app-testing",
@@ -101,10 +101,10 @@
       "category": "Development"
     },
     {
-      "name": "support-inbox-simulation",
+      "name": "support-storm",
       "source": {
         "source": "local",
-        "path": "./plugins/support-inbox-simulation"
+        "path": "./plugins/support-storm"
       },
       "policy": {
         "installation": "AVAILABLE",

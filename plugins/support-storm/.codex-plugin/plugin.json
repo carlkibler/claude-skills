@@ -1,0 +1,26 @@
+{
+  "name": "support-storm",
+  "version": "1.0.0",
+  "description": "Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the product fixes that cut maintenance drag.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Support Storm",
+    "shortDescription": "Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the product fixes that cut maintenance drag.",
+    "longDescription": "Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the product fixes that cut maintenance drag. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "developerName": "carlkibler",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Use the Support Storm skill for this task."
+    ],
+    "brandColor": "#10A37F",
+    "composerIcon": "./skills/support-storm/assets/icon.svg",
+    "logo": "./skills/support-storm/assets/icon.svg"
+  }
+}

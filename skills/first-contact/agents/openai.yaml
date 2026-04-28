@@ -1,0 +1,9 @@
+interface:
+  display_name: "First Contact"
+  short_description: "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup. Safe for repo-local and cloud/repo-checkout workflows."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#10A37F"
+  default_prompt: "Use the First Contact skill for this task."
+policy:
+  allow_implicit_invocation: true

@@ -1,9 +1,0 @@
-interface:
-  display_name: "First-Run Red Team"
-  short_description: "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup. Safe for repo-local and cloud/repo-checkout workflows."
-  icon_small: "./assets/icon.svg"
-  icon_large: "./assets/icon.svg"
-  brand_color: "#DC2626"
-  default_prompt: "Red-team the first-run experience for this product. Find where a new user gets confused, abandons setup, or thinks the app is broken."
-policy:
-  allow_implicit_invocation: true

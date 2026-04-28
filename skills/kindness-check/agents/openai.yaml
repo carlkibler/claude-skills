@@ -1,0 +1,9 @@
+interface:
+  display_name: "Kindness Check"
+  short_description: "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out. Safe for repo-local and cloud/repo-checkout workflows."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#10A37F"
+  default_prompt: "Use the Kindness Check skill for this task."
+policy:
+  allow_implicit_invocation: true

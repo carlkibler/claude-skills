@@ -1,0 +1,26 @@
+{
+  "name": "kindness-check",
+  "version": "1.0.0",
+  "description": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Kindness Check",
+    "shortDescription": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out.",
+    "longDescription": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "developerName": "carlkibler",
+    "category": "Development",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Use the Kindness Check skill for this task."
+    ],
+    "brandColor": "#10A37F",
+    "composerIcon": "./skills/kindness-check/assets/icon.svg",
+    "logo": "./skills/kindness-check/assets/icon.svg"
+  }
+}
