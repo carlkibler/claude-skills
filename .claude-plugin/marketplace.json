@@ -11,7 +11,9 @@
       "name": "pre-mortem",
       "description": "Multi-agent project pre-mortem (Gary Klein technique). Spawns parallel agents with different failure-finding mandates, synthesizes into ranked risks with mitigations.",
       "source": "./",
-      "skills": ["./skills/pre-mortem"],
+      "skills": [
+        "./skills/pre-mortem"
+      ],
       "category": "productivity",
       "version": "1.0.0"
     },
@@ -19,7 +21,9 @@
       "name": "profile-me",
       "description": "Build a portable AI profile from your digital footprint. Produces personal/professional portraits, a working-with-me guide, and a compact system prompt for any AI assistant.",
       "source": "./",
-      "skills": ["./skills/profile-me"],
+      "skills": [
+        "./skills/profile-me"
+      ],
       "category": "productivity",
       "version": "1.0.0"
     },
@@ -27,7 +31,9 @@
       "name": "second-opinions",
       "description": "Validate decisions with a different AI model. Detects available LLM CLIs and routes to the best one. Use for critical code reviews, design decisions, and pre-merge validation.",
       "source": "./",
-      "skills": ["./skills/second-opinions"],
+      "skills": [
+        "./skills/second-opinions"
+      ],
       "category": "development",
       "version": "1.0.0"
     },
@@ -35,7 +41,9 @@
       "name": "handle-pr",
       "description": "Autonomously handle GitHub PR review comments: evaluate each thread, implement HIGH/MEDIUM changes, run tests, Copilot quality pass, commit, reply to every thread, then watch for follow-up comments for 12 minutes.",
       "source": "./",
-      "skills": ["./skills/handle-pr"],
+      "skills": [
+        "./skills/handle-pr"
+      ],
       "category": "productivity",
       "version": "1.1.0"
     },
@@ -43,15 +51,19 @@
       "name": "chezmoi-drift",
       "description": "Audit chezmoi-managed dotfiles for drift, unmanaged files worth tracking, and broken Claude/Codex shared-skill installs.",
       "source": "./",
-      "skills": ["./skills/chezmoi-drift"],
+      "skills": [
+        "./skills/chezmoi-drift"
+      ],
       "category": "productivity",
       "version": "1.0.0"
     },
     {
       "name": "trust-audit",
-      "description": "Audit whether a product will feel trustworthy, creepy, deceptive, or unsafe to users — across permissions, privacy, billing, file mutation, and silent-failure surfaces.",
+      "description": "Audit whether a product will feel trustworthy, creepy, deceptive, or unsafe to users \u2014 across permissions, privacy, billing, file mutation, and silent-failure surfaces.",
       "source": "./",
-      "skills": ["./skills/trust-audit"],
+      "skills": [
+        "./skills/trust-audit"
+      ],
       "category": "security",
       "version": "1.0.0"
     },
@@ -59,7 +71,9 @@
       "name": "support-storm",
       "description": "Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the product fixes that cut maintenance drag.",
       "source": "./",
-      "skills": ["./skills/support-storm"],
+      "skills": [
+        "./skills/support-storm"
+      ],
       "category": "productivity",
       "version": "1.0.0"
     },
@@ -67,7 +81,9 @@
       "name": "first-contact",
       "description": "Red-team a product's onboarding, permissions, activation, and first-success experience to find where new users get confused, think the app is broken, or abandon setup.",
       "source": "./",
-      "skills": ["./skills/first-contact"],
+      "skills": [
+        "./skills/first-contact"
+      ],
       "category": "security",
       "version": "1.0.0"
     },
@@ -75,24 +91,40 @@
       "name": "wifi-qr",
       "description": "Generate a WiFi QR code PNG phones can scan to join a network instantly. Self-contained uv script, no pre-installed packages needed.",
       "source": "./",
-      "skills": ["./skills/wifi-qr"],
+      "skills": [
+        "./skills/wifi-qr"
+      ],
       "category": "productivity",
       "version": "1.0.0"
     },
     {
       "name": "parallel-isolated-app-testing",
-      "description": "Design and run parallel isolated testing for desktop apps, menu bar apps, and local tools with shared state — maps collision surfaces, defines isolated launch contracts, creates fixture profiles, and splits non-colliding test lanes.",
+      "description": "Design and run parallel isolated testing for desktop apps, menu bar apps, and local tools with shared state \u2014 maps collision surfaces, defines isolated launch contracts, creates fixture profiles, and splits non-colliding test lanes.",
       "source": "./",
-      "skills": ["./skills/parallel-isolated-app-testing"],
+      "skills": [
+        "./skills/parallel-isolated-app-testing"
+      ],
       "category": "development",
       "version": "1.0.0"
     },
     {
       "name": "kindness-check",
-      "description": "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out.",
+      "description": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out.",
       "source": "./",
-      "skills": ["./skills/kindness-check"],
+      "skills": [
+        "./skills/kindness-check"
+      ],
       "category": "development",
+      "version": "1.0.0"
+    },
+    {
+      "name": "wide-open-brainstorm",
+      "description": "Run a serious, whimsical, multi-round product brainstorming room that moves between big-picture strategy, project-level organization, tactical actions, and delightful metaphors.",
+      "source": "./",
+      "skills": [
+        "./skills/wide-open-brainstorm"
+      ],
+      "category": "productivity",
       "version": "1.0.0"
     }
   ]

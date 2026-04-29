@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wide Open Brainstorm"
+  short_description: "Run a serious, whimsical, multi-round product brainstorming room that moves between big-picture strategy, project-level organization, tactical actions, and delightful metaphors. Safe for repo-local and cloud/repo-checkout workflows."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#10A37F"
+  default_prompt: "Use the Wide Open Brainstorm skill for this task."
+policy:
+  allow_implicit_invocation: true

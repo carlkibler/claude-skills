@@ -88,6 +88,7 @@ Tools for the day-to-day of writing and reviewing code.
 | **kindness-check** | Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses. Finds what makes users uninstall, machines overheat, developers quit, and support people burn out.<br><sub>`/plugin install kindness-check@carl-tools`</sub> |
 | **profile-me** | Build a portable AI profile from your digital footprint<br><sub>`/plugin install profile-me@carl-tools`</sub> |
 | **support-storm** | Simulate support emails, reviews, refunds, and confused complaints a launch or feature change will generate, then identify the product fixes that cut maintenance drag.<br><sub>`/plugin install support-storm@carl-tools`</sub> |
+| **wide-open-brainstorm** | Run a serious, whimsical, multi-round product brainstorming room that moves between big-picture strategy, project-level organization, tactical actions, and delightful metaphors.<br><sub>`/plugin install wide-open-brainstorm@carl-tools`</sub> |
 | **wifi-qr** | Generate a WiFi QR code PNG<br><sub>`/plugin install wifi-qr@carl-tools`</sub> |
 
 ## Managing plugins

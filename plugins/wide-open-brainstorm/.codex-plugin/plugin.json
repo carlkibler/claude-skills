@@ -1,0 +1,26 @@
+{
+  "name": "wide-open-brainstorm",
+  "version": "1.0.0",
+  "description": "Run a serious, whimsical, multi-round product brainstorming room that moves between big-picture strategy, project-level organization, tactical actions, and delightful metaphors.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wide Open Brainstorm",
+    "shortDescription": "Run a serious, whimsical, multi-round product brainstorming room that moves between big-picture strategy, project-level organization, tactical actions, and delightful metaphors.",
+    "longDescription": "Run a serious, whimsical, multi-round product brainstorming room that moves between big-picture strategy, project-level organization, tactical actions, and delightful metaphors. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "developerName": "carlkibler",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Use the Wide Open Brainstorm skill for this task."
+    ],
+    "brandColor": "#10A37F",
+    "composerIcon": "./skills/wide-open-brainstorm/assets/icon.svg",
+    "logo": "./skills/wide-open-brainstorm/assets/icon.svg"
+  }
+}

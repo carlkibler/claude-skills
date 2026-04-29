@@ -125,6 +125,18 @@
       "category": "Security"
     },
     {
+      "name": "wide-open-brainstorm",
+      "source": {
+        "source": "local",
+        "path": "./plugins/wide-open-brainstorm"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "wifi-qr",
       "source": {
         "source": "local",
