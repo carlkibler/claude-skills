@@ -70,6 +70,7 @@ Find failure modes, trust problems, and support burden before your users do.
 | **launch-sequence** | Full pre-launch gauntlet with GO/CAUTION/NO-GO verdict<br><sub>`/plugin install launch-sequence@carl-tools`</sub> |
 | **post-mortem** | Blameless post-mortem that feeds learnings back into your skill collection<br><sub>`/plugin install post-mortem@carl-tools`</sub> |
 | **pre-mortem** | Multi-agent project pre-mortem — ranked risks with mitigations<br><sub>`/plugin install pre-mortem@carl-tools`</sub> |
+| **scope-hammer** | Compress brainstorm output into MVP scope with DELETE/MOCK/ALREADY EXISTS/SHIP classification<br><sub>`/plugin install scope-hammer@carl-tools`</sub> |
 | **support-storm** | Simulate the support emails and refunds a launch will generate<br><sub>`/plugin install support-storm@carl-tools`</sub> |
 | **trust-audit** | Audit a product's trust surface: permissions, privacy, billing, and silent failures<br><sub>`/plugin install trust-audit@carl-tools`</sub> |
 | **wide-open-brainstorm** | Multi-model brainstorming room for product strategy — serious plus whimsical, multi-altitude ideation<br><sub>`/plugin install wide-open-brainstorm@carl-tools`</sub> |

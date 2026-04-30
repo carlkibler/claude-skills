@@ -156,6 +156,16 @@
       ],
       "category": "productivity",
       "version": "1.0.0"
+    },
+    {
+      "name": "scope-hammer",
+      "description": "Ruthlessly compress brainstorm output into a shippable MVP \u2014 classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch.",
+      "source": "./",
+      "skills": [
+        "./skills/scope-hammer"
+      ],
+      "category": "productivity",
+      "version": "1.0.0"
     }
   ]
 }

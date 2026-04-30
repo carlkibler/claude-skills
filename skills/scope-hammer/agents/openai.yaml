@@ -1,0 +1,9 @@
+interface:
+  display_name: "Scope Hammer"
+  short_description: "Ruthlessly compress brainstorm output into a shippable MVP — classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch. Safe for repo-local and cloud/repo-checkout workflows."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#F97316"
+  default_prompt: "Apply the scope hammer to this brainstorm or feature list. Classify everything as DELETE, MOCK, ALREADY EXISTS, or SHIP. Give me the shortest path to a launchable MVP."
+policy:
+  allow_implicit_invocation: true
