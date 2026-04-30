@@ -8,3 +8,7 @@ __pycache__/
 .dolt/
 *.db
 .beads-credential-key
+
+# beads-compound: persist knowledge across machines
+!.beads/memory/
+!.beads/memory/**
