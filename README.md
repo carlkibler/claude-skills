@@ -88,6 +88,7 @@ Tools for the day-to-day of writing and reviewing code.
 | **first-contact** | Red-team a product's onboarding and first-run experience to find where new users get confused, think it's broken, or abandon setup.<br><sub>`/plugin install first-contact@carl-tools`</sub> |
 | **kindness-check** | Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses.<br><sub>`/plugin install kindness-check@carl-tools`</sub> |
 | **profile-me** | Build a portable AI profile from your digital footprint<br><sub>`/plugin install profile-me@carl-tools`</sub> |
+| **scope-hammer** | Ruthlessly compress brainstorm output into a shippable MVP — classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch.<br><sub>`/plugin install scope-hammer@carl-tools`</sub> |
 | **support-storm** | Simulate the support emails, reviews, and complaints a launch will generate, then identify product fixes that cut maintenance drag.<br><sub>`/plugin install support-storm@carl-tools`</sub> |
 | **wifi-qr** | Generate a WiFi QR code PNG<br><sub>`/plugin install wifi-qr@carl-tools`</sub> |
 
