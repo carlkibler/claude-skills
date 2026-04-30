@@ -67,6 +67,7 @@ Find failure modes, trust problems, and support burden before your users do.
 | Skill | |
 |-------|---|
 | **first-contact** | Red-team onboarding and first-run experience for abandonment traps<br><sub>`/plugin install first-contact@carl-tools`</sub> |
+| **launch-sequence** | Full pre-launch gauntlet with GO/CAUTION/NO-GO verdict<br><sub>`/plugin install launch-sequence@carl-tools`</sub> |
 | **pre-mortem** | Multi-agent project pre-mortem — ranked risks with mitigations<br><sub>`/plugin install pre-mortem@carl-tools`</sub> |
 | **support-storm** | Simulate the support emails and refunds a launch will generate<br><sub>`/plugin install support-storm@carl-tools`</sub> |
 | **trust-audit** | Audit a product's trust surface: permissions, privacy, billing, and silent failures<br><sub>`/plugin install trust-audit@carl-tools`</sub> |

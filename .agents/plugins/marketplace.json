@@ -53,6 +53,18 @@
       "category": "Development"
     },
     {
+      "name": "launch-sequence",
+      "source": {
+        "source": "local",
+        "path": "./plugins/launch-sequence"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "parallel-isolated-app-testing",
       "source": {
         "source": "local",

@@ -126,6 +126,16 @@
       ],
       "category": "productivity",
       "version": "1.0.0"
+    },
+    {
+      "name": "launch-sequence",
+      "description": "Run the full pre-launch gauntlet (first-contact → support-storm → trust-audit → pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
+      "source": "./",
+      "skills": [
+        "./skills/launch-sequence"
+      ],
+      "category": "productivity",
+      "version": "1.0.0"
     }
   ]
 }
