@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "pre-mortem",
-      "description": "Multi-agent project pre-mortem — parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations.",
+      "description": "Multi-agent project pre-mortem \u2014 parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations.",
       "source": "./",
       "skills": [
         "./skills/pre-mortem"
@@ -19,7 +19,7 @@
     },
     {
       "name": "profile-me",
-      "description": "Build a personal AI profile from your digital footprint — portrait, working-with-me guide, and compact system prompt for any AI assistant.",
+      "description": "Build a personal AI profile from your digital footprint \u2014 portrait, working-with-me guide, and compact system prompt for any AI assistant.",
       "source": "./",
       "skills": [
         "./skills/profile-me"
@@ -29,7 +29,7 @@
     },
     {
       "name": "second-opinions",
-      "description": "Get validation from a different AI model before committing major changes — detects available LLM CLIs and routes to the best one.",
+      "description": "Get validation from a different AI model before committing major changes \u2014 detects available LLM CLIs and routes to the best one.",
       "source": "./",
       "skills": [
         "./skills/second-opinions"
@@ -39,7 +39,7 @@
     },
     {
       "name": "handle-pr",
-      "description": "Autonomously handle GitHub PR review comments — evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
+      "description": "Autonomously handle GitHub PR review comments \u2014 evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
       "source": "./",
       "skills": [
         "./skills/handle-pr"
@@ -59,7 +59,7 @@
     },
     {
       "name": "trust-audit",
-      "description": "Audit whether a product feels trustworthy or unsafe — covering permissions, privacy, billing, file mutation, and silent-failure surfaces.",
+      "description": "Audit whether a product feels trustworthy or unsafe \u2014 covering permissions, privacy, billing, file mutation, and silent-failure surfaces.",
       "source": "./",
       "skills": [
         "./skills/trust-audit"
@@ -99,7 +99,7 @@
     },
     {
       "name": "parallel-isolated-app-testing",
-      "description": "Design parallel isolated test lanes for desktop apps and local tools with shared state — maps collision surfaces and splits non-colliding test lanes.",
+      "description": "Design parallel isolated test lanes for desktop apps and local tools with shared state \u2014 maps collision surfaces and splits non-colliding test lanes.",
       "source": "./",
       "skills": [
         "./skills/parallel-isolated-app-testing"
@@ -109,7 +109,7 @@
     },
     {
       "name": "kindness-check",
-      "description": "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses.",
+      "description": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses.",
       "source": "./",
       "skills": [
         "./skills/kindness-check"
@@ -119,7 +119,7 @@
     },
     {
       "name": "wide-open-brainstorm",
-      "description": "Multi-model brainstorming room for product strategy and experience design — serious plus whimsical, multi-altitude, multi-round ideation.",
+      "description": "Multi-model brainstorming room for product strategy and experience design \u2014 serious plus whimsical, multi-altitude, multi-round ideation.",
       "source": "./",
       "skills": [
         "./skills/wide-open-brainstorm"
@@ -129,7 +129,7 @@
     },
     {
       "name": "launch-sequence",
-      "description": "Run the full pre-launch gauntlet (first-contact → support-storm → trust-audit → pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
+      "description": "Run the full pre-launch gauntlet (first-contact \u2192 support-storm \u2192 trust-audit \u2192 pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
       "source": "./",
       "skills": [
         "./skills/launch-sequence"
@@ -139,12 +139,22 @@
     },
     {
       "name": "decision-log",
-      "description": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale — in a format a future agent can read to reconstruct context.",
+      "description": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale \u2014 in a format a future agent can read to reconstruct context.",
       "source": "./",
       "skills": [
         "./skills/decision-log"
       ],
       "category": "development",
+      "version": "1.0.0"
+    },
+    {
+      "name": "post-mortem",
+      "description": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
+      "source": "./",
+      "skills": [
+        "./skills/post-mortem"
+      ],
+      "category": "productivity",
       "version": "1.0.0"
     }
   ]

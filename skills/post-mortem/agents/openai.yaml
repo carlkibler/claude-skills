@@ -1,0 +1,9 @@
+interface:
+  display_name: "Post-Mortem"
+  short_description: "Analyze a real failure — reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence. Safe for repo-local and cloud/repo-checkout workflows."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#DC2626"
+  default_prompt: "Run a blameless post-mortem on what just broke. Reconstruct the timeline, find root cause, extract learnings, and tell me what to add to my pre-mortem or support-storm skills."
+policy:
+  allow_implicit_invocation: true

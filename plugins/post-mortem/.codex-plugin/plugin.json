@@ -1,0 +1,26 @@
+{
+  "name": "post-mortem",
+  "version": "1.0.0",
+  "description": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Post-Mortem",
+    "shortDescription": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
+    "longDescription": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "developerName": "carlkibler",
+    "category": "Productivity",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Run a blameless post-mortem on what just broke. Reconstruct the timeline, find root cause, extract learnings, and tell me what to add to my pre-mortem or support-storm skills."
+    ],
+    "brandColor": "#DC2626",
+    "composerIcon": "./skills/post-mortem/assets/icon.svg",
+    "logo": "./skills/post-mortem/assets/icon.svg"
+  }
+}

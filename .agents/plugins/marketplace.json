@@ -89,6 +89,18 @@
       "category": "Development"
     },
     {
+      "name": "post-mortem",
+      "source": {
+        "source": "local",
+        "path": "./plugins/post-mortem"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
       "name": "pre-mortem",
       "source": {
         "source": "local",
