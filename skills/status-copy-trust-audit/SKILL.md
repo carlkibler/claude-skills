@@ -14,6 +14,8 @@ default_prompt: "Audit this CLI/status output. Make the states consistent, idemp
 
 Status text is product UI. If it says "updated" when nothing updated, trust leaks out through a tiny hole and then somehow the whole boat is wet.
 
+Third-order stance: trust is built in boring repeated runs and in failure paths. Audit whether the copy preserves user agency when things go wrong, not just whether success text sounds tidy.
+
 ## When to Use
 
 - The user says output is odd, confusing, or "not sure what happened"
@@ -42,7 +44,7 @@ Run the command at least twice. If scope flags exist, test the default and expli
 <tool> doctor --smoke
 ```
 
-Keep exact stdout/stderr snippets in notes or tests.
+Keep exact stdout/stderr snippets in notes or tests. Also trigger at least one intentional failure when safe: missing config, stale path, bad scope, offline/network failure, or permission denied.
 
 ## Phase 2: Define State Semantics
 
@@ -59,6 +61,8 @@ For each line, label what it means:
 
 Never use "updated" for both package version changes and config refreshes.
 
+Add an actionability check: every warning/error line should answer "what now?" or point to the exact command/doc that does. If no action is needed, say why it is safe to ignore.
+
 ## Phase 3: Align Related Clients
 
 If multiple clients are shown together, make their grammar parallel:
@@ -69,7 +73,7 @@ Codex: refreshed
 Gemini CLI: refreshed (scope: user, trusted)
 ```
 
-If one client has extra concepts (scope/trust), state them explicitly rather than omitting them elsewhere.
+If one client has extra concepts (scope/trust), state them explicitly rather than omitting them elsewhere. Watch for semantic decay: copy that was true before a feature flag, migration, or installer change may now be wrong even if grammar is fine.
 
 ## Phase 4: Verify Idempotence
 
@@ -88,6 +92,8 @@ Add tests for:
 - repeated update/setup output
 - no-op vs refresh vs version change wording
 - scope/trust label consistency
+- intentional failure output and actionable recovery text
+- stale-copy regression when feature flags or installer behavior changes
 
 </process>
 
@@ -95,5 +101,7 @@ Add tests for:
 
 - Use `release-operator` before shipping changed status text.
 - Use `remote-host-verifier` to confirm the same status semantics on remote hosts.
+- Use `kindness-check` when error copy may blame the user for system drift or tool limitations.
+- Use `release-operator` when status text changes must be verified from the published artifact, not just the checkout.
 
 </interlocks>

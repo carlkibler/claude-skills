@@ -91,6 +91,55 @@ def section(label: str, scan: dict[str, Any] | None, error: str | None) -> str:
     return "\n".join(lines)
 
 
+def total(scan: dict[str, Any] | None, path: tuple[str, ...], default: int = 0) -> int:
+    value: Any = scan
+    for key in path:
+        if not isinstance(value, dict):
+            return default
+        value = value.get(key)
+    return value if isinstance(value, int) else default
+
+
+def third_order(results: list[tuple[str, dict[str, Any] | None, str | None]]) -> str:
+    lines = [
+        "## Third-order synthesis",
+        "",
+        "Use this section to avoid stopping at the obvious fix.",
+        "",
+    ]
+    for label, scan, error in results:
+        if error or scan is None:
+            continue
+        calls = total(scan, ("toolsmith", "toolCalls"))
+        lost = total(scan, ("lostOpportunities", "total"))
+        candidates = total(scan, ("lostOpportunities", "editCandidates"))
+        sessions = total(scan, ("sessions", "claude")) + total(scan, ("sessions", "codex"))
+        ratio = lost / max(calls, 1)
+        lines.append(f"### {label}")
+        lines.append("")
+        lines.append(f"- First-order: {lost} hard misses, {candidates} patch candidates, {calls} Toolsmith calls across {sessions} session(s).")
+        if calls == 0 and sessions:
+            lines.append("- Second-order: registration or instructions may exist, but the workflow is not becoming salient during real work.")
+            lines.append("- Third-order path: add an activation nudge or wrapper that appears at the moment of large-file friction, not another static reminder.")
+        elif ratio > 3:
+            lines.append("- Second-order: agents sometimes know the better tool, but native habits still win under speed pressure.")
+            lines.append("- Third-order path: convert repeated misses into named skills/scripts that make the better route shorter than the old route.")
+        else:
+            lines.append("- Second-order: adoption is visible; now optimize for precision, usefulness, and fewer false-positive nudges.")
+            lines.append("- Third-order path: use silence/anomaly detection so absence of lost opportunities is verified, not assumed.")
+        lines.append("")
+    lines.extend([
+        "Candidate new mental paths:",
+        "",
+        "- **Shadow workflow collector**: capture where the human bridges a gap after agent looping.",
+        "- **Silence detector**: flag missing telemetry before calling a workflow healthy.",
+        "- **Exit-door drill**: every release-like workflow proves rollback before celebration.",
+        "- **Jank weather report**: summarize temporal UI friction, not just screenshots.",
+        "",
+    ])
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--days", type=float, default=7)
@@ -120,6 +169,7 @@ def main() -> int:
     for label, scan, error in results:
         report.append(section(label, scan, error))
 
+    report.append(third_order(results))
     report.append("## Follow-up\n\n- Re-run after more heavy development.\n- Convert repeated hard misses into skills, scripts, or Toolsmith adoption snippets.\n")
     text = "\n".join(report)
     out = notes_dir / f"agent-log-forensics-{stamp}.md"

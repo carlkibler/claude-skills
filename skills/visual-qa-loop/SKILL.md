@@ -14,6 +14,8 @@ default_prompt: "Run visual QA for this UI change. Capture before/after screensh
 
 For UI work, "tests pass" is not the same as "eyes pass."
 
+Third-order stance: static screenshots are receipts, not the whole truth. Look for temporal debt, hidden friction, and trust changes between states: loading, empty, error, hover, focus, permission prompts, and the moment after a user clicks.
+
 ## When to Use
 
 - The user asks for visual QA, screenshots, design polish, UI review, hover/focus review, or before/after proof
@@ -32,7 +34,7 @@ For UI work, "tests pass" is not the same as "eyes pass."
 
 ## Phase 1: Pick Stable Targets
 
-Identify the exact pages/windows/states to capture. Prefer the smallest set that covers the changed surface.
+Identify the exact pages/windows/states to capture. Prefer the smallest set that covers the changed surface. Include transition states when relevant: loading, empty, error, first-run, disabled, hover/focus, and post-action success/failure.
 
 For web/file targets on this machine, use `chrome-shot` rather than raw Chrome commands:
 
@@ -46,7 +48,7 @@ chrome-shot --size 390x1200 -o ~/dev/agent-notes/<project>/visual-qa/<run>/home-
 
 If changes are not applied yet, capture `before/`. After edits/build, capture `after/` with the same viewport, route, data, and state.
 
-Use filenames that encode route/state/viewport, not verbose captions.
+Use filenames that encode route/state/viewport, not verbose captions. If the issue may be motion/jank, capture a short trace, repeated screenshots, or before/after states around the transition rather than only the final settled UI.
 
 ## Phase 3: Review Like a User
 
@@ -58,6 +60,9 @@ Check:
 - trust fractures: surprise permissions, privacy creep, pricing ambiguity, destructive actions
 - mobile density and tap targets
 - empty/error/loading states when relevant
+- information density: high-signal details should not disappear behind unnecessary hover/clicks
+- temporal debt: flicker, layout shift, stale preview, delayed permission prompt, or post-click ambiguity
+- downstream friction: a small visual change near a CTA, filename, price, or destructive action can be larger than its pixel area
 
 ## Phase 4: Iterate Once Before Reporting
 
@@ -71,6 +76,7 @@ Return:
 - what changed visually
 - pass/fail verdict
 - any remaining concerns
+- any "looks fine but may feel wrong over time" temporal/friction concerns
 
 Keep it short. The screenshots are the receipts.
 
@@ -80,5 +86,7 @@ Keep it short. The screenshots are the receipts.
 
 - Use `trust-audit` when the visual surface touches permissions, privacy, billing, or destructive file changes.
 - Use `status-copy-trust-audit` when UI/CLI wording is the confusing part.
+- Use `first-contact` when the visual change touches onboarding or day-zero mental models.
+- Use `agent-log-forensics` when recurring user complaints point at visual or interaction jank across sessions.
 
 </interlocks>

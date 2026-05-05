@@ -14,11 +14,14 @@ default_prompt: "Scan recent Claude and Codex session logs on this machine and a
 
 Use this when the goal is not one bug fix, but making the human+agent system smarter after observing real sessions.
 
+Third-order stance: skip the obvious "agent forgot tool" answer. Ask what hidden loop, missing affordance, brittle instruction, or human workaround made the tool forgettable in the first place. Prefer new mental paths over more reminders.
+
 ## When to Use
 
 - The user asks whether agents are using a tool, skill, MCP server, or workflow
 - The user wants "lost opportunities" where agents should have used better tools
 - The user asks for patterns in interactions, repeated frustrations, jank, or productivity bottlenecks
+- The user asks "why did that take so many turns?", "why did you struggle?", or "how do we level this up?"
 - You need to turn observed behavior into new user-level skills, scripts, or project instructions
 
 ## When NOT to Use
@@ -54,11 +57,13 @@ If the scanner is not installed yet, say that and fall back to a lightweight cou
 
 ## Phase 3: Classify Findings
 
-Create three sections:
+Create five sections:
 
 1. **Tool adoption** — registered vs actually called, by agent/client, with evidence counts.
 2. **Lost opportunities** — where the agent used a worse tool. Separate hard misses from candidates.
 3. **Behavior/productivity themes** — repeated user frustrations, recurring workflow patterns, and quality gaps.
+4. **Shadow workflows** — places the human manually intervened, re-ran commands, pasted exact instructions, or corrected the agent after loops. Treat these as highest-value skill/script candidates.
+5. **Silence anomalies** — expected logs, tool calls, or telemetry are missing. Lack of evidence can mean broken instrumentation, not success.
 
 For Toolsmith, classify:
 
@@ -84,8 +89,21 @@ Use this table:
 | Same repo-specific gotcha repeated | CLAUDE.md / AGENTS.md update |
 | Agents know the right thing but forget | Prompt snippet / guardrail |
 | Agents cannot inspect evidence cheaply | Toolsmith/MCP feature |
+| User manually intervenes after agent loops | Skill or deterministic helper that removes the human bridge |
+| Expected telemetry is silent | Logging/instrumentation fix before drawing conclusions |
+| Same failure appears across projects | User-level skill plus project opt-out, not per-repo copy-paste |
 
-## Phase 5: Write the Report
+## Phase 5: Third-order Synthesis
+
+After listing findings, do one further pass:
+
+- First-order: what tool or skill should have been used?
+- Second-order: why did the agent not choose it under real pressure?
+- Third-order: what new path would make the better behavior feel inevitable, delightful, or weirdly obvious next time?
+
+Name the proposed path in memorable language, for example "shadow workflow collector", "silence detector", "release exit-door drill", or "jank weather report".
+
+## Phase 6: Write the Report
 
 Store reports in:
 
@@ -99,6 +117,7 @@ Include:
 - Adoption verdict
 - Lost-opportunity examples, sanitized
 - Skills/scripts/tools to add next
+- Third-order ideas worth trying even if they sound whimsical
 - Follow-up observation plan
 
 </process>
@@ -114,5 +133,7 @@ Use `scripts/collect_toolsmith_scan.py` to run local and remote Toolsmith scans 
 - Use `remote-host-verifier` when comparing a command across local and remote hosts.
 - Use `skill-creator` when turning findings into new skills.
 - Use `status-copy-trust-audit` when confusing CLI output appears repeatedly in logs.
+- Use `beads-knowledge` or the project tracker to preserve hard-won patterns that should not be rediscovered.
+- Use `quick-check --cheap` for broad synthesis and a different model's view before writing new skills.
 
 </interlocks>

@@ -14,6 +14,8 @@ default_prompt: "Run the release end-to-end. Verify tests and package contents, 
 
 A release is not done when the commit is made. It is done when a fresh consumer can install/update and the remote host agrees.
 
+Third-order stance: a release is a trust event with an exit door. Verify not just the happy path, but leakage, rollback, stale consumers, and the support email this version would generate if it went sideways.
+
 ## When to Use
 
 - The user says release, deploy, publish, `cpd`, or "do that release"
@@ -58,11 +60,13 @@ npm pack --dry-run
 
 For packaged CLIs, inspect the dry-run tarball contents and confirm support scripts advertised by doctor/live checks are included.
 
+Run a leak audit against the artifact list: no `.env`, tokens, local logs, private notes, nested `.git`, test-only fixtures advertised as live features, or generated files that encode local paths.
+
 ## Phase 3: Version and Changelog
 
 - Move changelog entries from Unreleased to the target version/date.
 - Bump package metadata and lockfiles together.
-- Keep changelog user-facing, not just commit-shaped.
+- Keep changelog user-facing, not just commit-shaped. Include changed trust semantics explicitly: install path, migration, telemetry/logging, permissions, reversibility, and support impact.
 
 ## Phase 4: Commit, Tag, Push, Publish
 
@@ -96,6 +100,8 @@ ssh vesta '<tool> update; <tool> --version; <tool> doctor --smoke'
 
 Classify any warnings. Release blockers are install failure, wrong version, missing packaged files, broken smoke test, or stale remote config pointing at the wrong binary.
 
+Do a rollback drill when feasible: confirm the previous version/tag can be reinstalled or the deployment can be rolled back. A release is only safe if the exit door opens.
+
 ## Phase 6: Report
 
 Return concise evidence:
@@ -105,6 +111,7 @@ Return concise evidence:
 - package/publish verification
 - local install/update result
 - remote install/update result
+- rollback/exit-door evidence, or why it was not applicable
 - any follow-up issues filed
 
 </process>
@@ -114,5 +121,7 @@ Return concise evidence:
 - Use `remote-host-verifier` for local/remote command comparison.
 - Use `status-copy-trust-audit` before release when CLI status text changed.
 - Use `changelog-writer` when changelog wording needs user-facing translation.
+- Use `support-storm` or `status-copy-trust-audit` when the release changes setup, billing, permissions, status output, or failure modes.
+- Use `remote-host-verifier` after release to catch stale package sources and hidden host drift.
 
 </interlocks>
