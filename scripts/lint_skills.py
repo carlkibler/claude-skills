@@ -51,6 +51,23 @@ def parse_frontmatter(text: str) -> dict[str, str]:
     return meta
 
 
+def yaml_scalar_is_quoted(value: str) -> bool:
+    value = value.strip()
+    return len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}
+
+
+def check_simple_yaml_scalars(label: str, yaml_text: str) -> None:
+    """Catch common frontmatter breakage without adding a PyYAML dependency."""
+    for line_no, line in enumerate(yaml_text.splitlines(), start=1):
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or ":" not in stripped:
+            continue
+        _key, value = stripped.split(":", 1)
+        value = value.strip()
+        if value and not yaml_scalar_is_quoted(value) and ": " in value:
+            err(f"{label}:{line_no}: unquoted YAML value contains ': '; wrap it in quotes")
+
+
 def check_skill(skill_path: Path, claude_names: set[str]) -> None:
     name = skill_path.name
     skill_md = skill_path / "SKILL.md"
@@ -59,7 +76,11 @@ def check_skill(skill_path: Path, claude_names: set[str]) -> None:
         err(f"{name}: missing SKILL.md")
         return
 
-    fm = parse_frontmatter(skill_md.read_text())
+    skill_text = skill_md.read_text()
+    frontmatter = re.match(r"^---\n(.*?)\n---\n", skill_text, re.S)
+    if frontmatter:
+        check_simple_yaml_scalars(f"{name}/SKILL.md", frontmatter.group(1))
+    fm = parse_frontmatter(skill_text)
 
     if not fm.get("name"):
         err(f"{name}/SKILL.md: missing 'name' in frontmatter")
@@ -128,6 +149,8 @@ def check_skill(skill_path: Path, claude_names: set[str]) -> None:
     openai_yaml = skill_path / "agents" / "openai.yaml"
     if not openai_yaml.exists():
         warn(f"{name}: missing skills/{name}/agents/openai.yaml (run sync_codex_packaging.py)")
+    else:
+        check_simple_yaml_scalars(f"{name}/agents/openai.yaml", openai_yaml.read_text())
 
     icon = skill_path / "assets" / "icon.svg"
     if not icon.exists():

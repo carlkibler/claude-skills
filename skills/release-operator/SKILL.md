@@ -1,6 +1,6 @@
 ---
 name: release-operator
-description: Run a CLI/app release end-to-end: verify state, update changelog/version, test packaging, commit, tag, push, publish, and verify installs.
+description: "Run a CLI/app release end-to-end: verify state, update changelog/version, test packaging, commit, tag, push, publish, and verify installs."
 display_name: "Release Operator"
 brand_color: "#059669"
 local_only: true
