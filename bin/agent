@@ -53,7 +53,27 @@ MODEL_FRONTIER="x-ai/grok-4.3"              # $1.25/$2.50 · 1M ctx · newest Gr
 #   openai/gpt-5.5-pro                # $30.00/$180.00 · 1M ctx · nuclear option
 #   ~openai/gpt-latest                # $5.00/$30.00 · 1M ctx · always fresh GPT
 
-# --------------------------------------------------------
+# --- Shorthands — first positional arg selects model by name --------
+# Usage: agent grok "question"  or  agent deepseek "question"  etc.
+resolve_shorthand() {
+    case "$1" in
+        grok)                         echo "x-ai/grok-4.3" ;;
+        deepseek|ds)                  echo "deepseek/deepseek-v4-pro" ;;
+        deepseek-flash|ds-flash|dsf)  echo "deepseek/deepseek-v4-flash" ;;
+        kimi)                         echo "~moonshotai/kimi-latest" ;;
+        gemini)                       echo "~google/gemini-pro-latest" ;;
+        flash)                        echo "~google/gemini-flash-latest" ;;
+        gpt)                          echo "~openai/gpt-latest" ;;
+        gpt-mini|mini)                echo "~openai/gpt-mini-latest" ;;
+        claude|opus)                  echo "~anthropic/claude-opus-latest" ;;
+        sonnet)                       echo "~anthropic/claude-sonnet-latest" ;;
+        haiku)                        echo "~anthropic/claude-haiku-latest" ;;
+        qwen)                         echo "qwen/qwen3.6-plus" ;;
+        mistral)                      echo "mistralai/mistral-medium-3-5" ;;
+        *)                            echo "" ;;
+    esac
+}
+# --------------------------------------------------------------------
 
 SYSTEM="Be concise. No preamble, no closing remarks. Answer directly. Prefer working code over explanation. Give the simplest solution that works."
 MODEL="$MODEL_DEFAULT"
@@ -61,23 +81,39 @@ PROMPT_ARGS=()
 
 show_usage() {
     cat <<EOF
-Usage: agent [OPTIONS] "your question"
+Usage: agent [OPTIONS] [SHORTHAND] "your question"
        pipe content to stdin for large inputs
 
-Options:
+Tier flags:
   --fast       Ultra-fast inference (${MODEL_FAST})
   --smart      Strong reasoning (${MODEL_SMART})
   --frontier   Best available (${MODEL_FRONTIER})
   --model ID   Explicit OpenRouter model ID
   -h, --help   Show this help
 
+Model shorthands (first positional arg):
+  grok          x-ai/grok-4.3
+  deepseek, ds  deepseek/deepseek-v4-pro
+  dsf           deepseek/deepseek-v4-flash
+  kimi          ~moonshotai/kimi-latest
+  gemini        ~google/gemini-pro-latest
+  flash         ~google/gemini-flash-latest
+  gpt           ~openai/gpt-latest
+  mini          ~openai/gpt-mini-latest
+  claude, opus  ~anthropic/claude-opus-latest
+  sonnet        ~anthropic/claude-sonnet-latest
+  haiku         ~anthropic/claude-haiku-latest
+  qwen          qwen/qwen3.6-plus
+  mistral       mistralai/mistral-medium-3-5
+
 Default model: ${MODEL_DEFAULT} (auto-tracks latest Gemini Flash)
 
 Examples:
   agent "What is the time complexity of quicksort?"
-  git diff | agent --smart "Review these changes for bugs"
+  agent grok "Explain the CAP theorem"
+  agent deepseek "Review this function for bugs"
+  git diff | agent kimi "Summarize these changes"
   agent --frontier "Design a distributed rate limiter"
-  agent --fast "Is this regex correct: [a-z]+"
 EOF
 }
 
@@ -91,6 +127,15 @@ while [[ $# -gt 0 ]]; do
         *)           PROMPT_ARGS+=("$1");     shift ;;
     esac
 done
+
+# Resolve shorthand from first positional arg, if present
+if [ ${#PROMPT_ARGS[@]} -gt 0 ]; then
+    shorthand=$(resolve_shorthand "${PROMPT_ARGS[0]}")
+    if [ -n "$shorthand" ]; then
+        MODEL="$shorthand"
+        PROMPT_ARGS=("${PROMPT_ARGS[@]:1}")
+    fi
+fi
 
 if [ -z "${OPENROUTER_API_KEY:-}" ]; then
     echo "Error: OPENROUTER_API_KEY not set in ~/.secrets" >&2
