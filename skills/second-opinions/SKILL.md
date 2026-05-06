@@ -30,7 +30,7 @@ Use the bundled detection script, with an inline fallback if `SKILL_DIR` isn't s
 
 ```bash
 bash "${SKILL_DIR}/scripts/detect-llms.sh" --quiet 2>/dev/null || \
-  for t in ask-ai ask-gemini codex llm; do command -v "$t" >/dev/null 2>&1 && echo "$t"; done
+  for t in agent ask-gemini codex llm; do command -v "$t" >/dev/null 2>&1 && echo "$t"; done
 ```
 
 Use the first one found. If none are available, tell the user and skip this step.
@@ -41,10 +41,10 @@ Second opinions are about **deep analysis**, not speed. Use the smartest model a
 
 | Tool | For deep analysis | For quick checks |
 |---|---|---|
-| `ask-ai` | `ask-ai --frontier` (claude-opus-4-5) | `ask-ai --smart` (gemini-2.5-pro) |
+| `agent` | `agent --frontier` (claude-opus-4-5) | `agent --smart` (gemini-2.5-pro) |
 | `ask-gemini` | `ask-gemini --pro` (Gemini Pro) | `ask-gemini` (Gemini Flash) |
 
-When this skill is invoked for **pre-merge review, design validation, or architecture decisions**, prefer `ask-ai --frontier` (or `ask-gemini --pro` if ask-ai unavailable). For quick sanity checks or brainstorming, `ask-ai --smart` is fine.
+When this skill is invoked for **pre-merge review, design validation, or architecture decisions**, prefer `agent --frontier` (or `ask-gemini --pro` if agent unavailable). For quick sanity checks or brainstorming, `agent --smart` is fine.
 
 ## How to Ask
 

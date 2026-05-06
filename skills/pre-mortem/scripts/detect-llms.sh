@@ -5,13 +5,21 @@
 #
 # Each detected tool gets a line: NAME|INVOKE_PATTERN|MODEL_FAMILY|NOTES
 # Families are deduplicated so we prefer model diversity.
-# ask-ai (OpenRouter) is preferred — if present, it covers all model families.
+# `agent` (OpenRouter) is preferred — covers all model tiers via flags.
 
 set -uo pipefail
 
 QUIET="${1:-}"
 
 declare -a FOUND=()
+
+# Add the repo's bin/ to PATH so `agent` is findable even without chezmoi install.
+# This script lives at skills/<name>/scripts/ — repo root is 3 levels up.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_BIN="${SCRIPT_DIR}/../../../bin"
+if [ -d "$REPO_BIN" ] && [[ ":$PATH:" != *":${REPO_BIN}:"* ]]; then
+    export PATH="${REPO_BIN}:$PATH"
+fi
 
 has_secret() {
     local var_name="$1"
@@ -41,13 +49,13 @@ probe() {
 
 [[ "$QUIET" != "--quiet" ]] && echo "Detecting available LLM CLIs..." >&2
 
-# ask-ai (OpenRouter) is the preferred tool — covers all model families via flags:
-#   default: gemini-2.5-flash  --fast: llama-4-scout  --smart: gemini-2.5-pro  --frontier: claude-opus-4-5
-probe "ask-ai" \
-    "command -v ask-ai && has_secret OPENROUTER_API_KEY" \
-    'ask-ai "{prompt}"' \
+# `agent` covers all tiers: default (gemini-2.5-flash), --fast (llama-4-scout),
+# --smart (gemini-2.5-pro), --frontier (claude-opus-4-5)
+probe "agent" \
+    "command -v agent && has_secret OPENROUTER_API_KEY" \
+    'agent "{prompt}"' \
     "openrouter" \
-    "OpenRouter multi-model wrapper (use --fast/--smart/--frontier flags)"
+    "OpenRouter multi-model (--fast/--smart/--frontier)"
 
 probe "llm" \
     "command -v llm" \

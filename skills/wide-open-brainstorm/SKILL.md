@@ -56,7 +56,7 @@ Before fan-out, detect which external LLM CLIs are available. Use the pre-mortem
 ```bash
 # Preferred — reuse pre-mortem's script if the skill is installed:
 bash "${SKILL_DIR}/../pre-mortem/scripts/detect-llms.sh" 2>/dev/null || \
-  for tool in ask-ai ask-gemini gemini llm codex; do
+  for tool in agent ask-gemini gemini llm codex; do
     command -v "$tool" >/dev/null 2>&1 && echo "found: $tool"
   done
 ```
@@ -82,14 +82,14 @@ Use the **6 core roles** below. Run **every available agent type**; don't leave 
 | **Cartographer** | Views, maps, grouping patterns, zoom levels, navigation metaphors | External LLM (fresh eyes — no codebase access) |
 | **Archivist** | Memory, synthesis, knowledge capture, long-term coherence, recovery flows | External LLM |
 | **Trickster** | Whimsical metaphors, silly-but-useful delight, strange UI lenses, absurdist reframes | External LLM (most creative divergence happens with no anchoring context) |
-| **Skeptic** | What becomes noise, what users ignore, what shouldn't ship, local maxima | Any model — assign to `ask-ai --fast` if available for blunt, fast output |
+| **Skeptic** | What becomes noise, what users ignore, what shouldn't ship, local maxima | Any model — assign to `agent --fast` if available for blunt, fast output |
 | **Executioner** | The strongest honest case for never building this at all — wrong timing, wrong audience, wrong founder, already solved, fundamental flaw in premise | Any model with a blunt mandate — always included, never optional |
 
 #### Perspective-expanding roles (add at least 2)
 
 | Role | What they generate | Ideal agent type |
 |---|---|---|
-| **Future Self** | 6/12/24-month horizon ideas; what smart teams converge on; leapfrog moves | External LLM (e.g., `ask-ai --frontier` or `ask-gemini`) |
+| **Future Self** | 6/12/24-month horizon ideas; what smart teams converge on; leapfrog moves | External LLM (e.g., `agent --frontier` or `ask-gemini`) |
 | **Outsider / Cultural Stranger** | Assumptions the team never questioned; non-default user perspectives | External LLM |
 | **Customer Whisperer** | Emotional arc the user goes through; delight moments; trust signals | External LLM |
 | **Devil's Advocate** | The honest thing nobody wants to say; core assumption challenges | Any model with a blunt mandate |
@@ -162,15 +162,15 @@ FORMAT: Flowing prose or numbered list, your choice. No hedging. No meta-comment
 |---|---|
 | Strategist | Code-aware subagent (`general-purpose` agent with local file access) |
 | Operator | Code-aware subagent |
-| Cartographer | `ask-ai --smart` (gemini-2.5-pro, strong spatial/systems reasoning) |
-| Archivist | `ask-ai --smart` or `ask-ai` (default flash) |
-| Trickster | `ask-ai --fast` (llama-4-scout, fast and generative, less anchored) |
-| Skeptic | `ask-ai --fast` (blunt, fast output) |
-| Future Self | `ask-ai --frontier` (claude-opus-4-5, widest horizon) |
-| Outsider | `ask-ai` (default, fresh framing via gemini-2.5-flash) |
-| Customer Whisperer | `ask-ai --smart` or any external LLM |
-| Devil's Advocate | `ask-ai --fast` — give the fastest, bluntest model |
-| Executioner | `ask-ai --fast` preferred; subagent with explicit "argue for abandonment" mandate otherwise |
+| Cartographer | `agent --smart` (gemini-2.5-pro, strong spatial/systems reasoning) |
+| Archivist | `agent --smart` or `agent` (default flash) |
+| Trickster | `agent --fast` (llama-4-scout, fast and generative, less anchored) |
+| Skeptic | `agent --fast` (blunt, fast output) |
+| Future Self | `agent --frontier` (claude-opus-4-5, widest horizon) |
+| Outsider | `agent` (default, fresh framing via gemini-2.5-flash) |
+| Customer Whisperer | `agent --smart` or any external LLM |
+| Devil's Advocate | `agent --fast` — give the fastest, bluntest model |
+| Executioner | `agent --fast` preferred; subagent with explicit "argue for abandonment" mandate otherwise |
 
 ### 5. Force altitude switching (apply during synthesis)
 

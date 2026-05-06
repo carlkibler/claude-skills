@@ -23,7 +23,7 @@ Verify tools once, upfront. Note availability — it shapes later steps.
 ```bash
 which gh && gh auth status          # required — stop if missing or unauthenticated
 bash "${SKILL_DIR}/scripts/detect-llms.sh" --quiet 2>/dev/null || \
-  for t in ask-ai ask-gemini codex llm; do command -v "$t" >/dev/null 2>&1 && echo "$t"; done
+  for t in agent ask-gemini codex llm; do command -v "$t" >/dev/null 2>&1 && echo "$t"; done
 # detect available code agents for quality pass
 ```
 

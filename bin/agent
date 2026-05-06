@@ -1,0 +1,122 @@
+#!/bin/bash
+# OpenRouter multi-model CLI for agents and skills.
+# Canonical source lives in carl-tools/bin/agent (agent-skills repo).
+# ~/.claude/bin/agent is a thin wrapper that calls this.
+#
+# Browse models: https://openrouter.ai/models
+set -euo pipefail
+
+source ~/.secrets 2>/dev/null || true
+
+# --- Model Tiers (curate to your taste) ----------------
+#
+# Default — fast, cheap, surprisingly capable
+MODEL_DEFAULT="google/gemini-2.5-flash"
+# Alternatives for default:
+#   google/gemini-2.5-flash-preview-05-20
+#   meta-llama/llama-4-scout           (free tier available)
+#   qwen/qwen3-30b-a3b                 (fast MoE, free tier)
+
+# --fast — ultra-low latency, blunt, good for skeptic/trickster roles
+MODEL_FAST="meta-llama/llama-4-scout"
+# Alternatives for --fast:
+#   qwen/qwen3-30b-a3b
+#   google/gemini-2.5-flash
+#   mistral/ministral-8b
+#   mistral/mistral-nemo
+
+# --smart — strong reasoning, code review, architecture
+MODEL_SMART="google/gemini-2.5-pro"
+# Alternatives for --smart:
+#   qwen/qwen3-235b-a22b               (excellent open-source, free tier)
+#   meta-llama/llama-4-maverick
+#   anthropic/claude-sonnet-4-5
+#   deepseek/deepseek-r1               (strong reasoning)
+
+# --frontier — best available, cost no object
+MODEL_FRONTIER="anthropic/claude-opus-4-5"
+# Alternatives for --frontier:
+#   openai/gpt-4.1
+#   google/gemini-2.5-pro
+#   x-ai/grok-3
+#   deepseek/deepseek-r1-0528
+
+# --------------------------------------------------------
+
+SYSTEM="Be concise. No preamble, no closing remarks. Answer directly. Prefer working code over explanation. Give the simplest solution that works."
+MODEL="$MODEL_DEFAULT"
+PROMPT_ARGS=()
+
+show_usage() {
+    cat <<EOF
+Usage: agent [OPTIONS] "your question"
+       pipe content to stdin for large inputs
+
+Options:
+  --fast       Ultra-fast inference (${MODEL_FAST})
+  --smart      Strong reasoning (${MODEL_SMART})
+  --frontier   Best available (${MODEL_FRONTIER})
+  --model ID   Explicit OpenRouter model ID
+  -h, --help   Show this help
+
+Default model: ${MODEL_DEFAULT}
+
+Examples:
+  agent "What is the time complexity of quicksort?"
+  git diff | agent --smart "Review these changes for bugs"
+  agent --frontier "Design a distributed rate limiter"
+  agent --fast "Is this regex correct: [a-z]+"
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --fast)      MODEL="$MODEL_FAST";     shift ;;
+        --smart)     MODEL="$MODEL_SMART";    shift ;;
+        --frontier)  MODEL="$MODEL_FRONTIER"; shift ;;
+        --model)     MODEL="$2";              shift 2 ;;
+        -h|--help)   show_usage; exit 0 ;;
+        *)           PROMPT_ARGS+=("$1");     shift ;;
+    esac
+done
+
+if [ -z "${OPENROUTER_API_KEY:-}" ]; then
+    echo "Error: OPENROUTER_API_KEY not set in ~/.secrets" >&2
+    exit 1
+fi
+
+if [ ${#PROMPT_ARGS[@]} -gt 0 ]; then
+    QUESTION="${PROMPT_ARGS[*]}"
+elif [ ! -t 0 ]; then
+    QUESTION=$(cat)
+else
+    show_usage >&2
+    exit 1
+fi
+
+payload=$(python3 -c "
+import json, sys
+print(json.dumps({
+    'model': sys.argv[1],
+    'messages': [
+        {'role': 'system', 'content': sys.argv[2]},
+        {'role': 'user', 'content': sys.argv[3]}
+    ],
+    'temperature': 0.7,
+    'max_tokens': 8000
+}))
+" "$MODEL" "$SYSTEM" "$QUESTION")
+
+curl -s https://openrouter.ai/api/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENROUTER_API_KEY}" \
+  -H "HTTP-Referer: https://claude.ai" \
+  -H "X-Title: Claude Code" \
+  -d "$payload" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+if 'error' in data:
+    print('Error:', data['error'].get('message', data['error']), file=sys.stderr)
+    sys.exit(1)
+print(data['choices'][0]['message']['content'])
+"

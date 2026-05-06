@@ -120,7 +120,7 @@ The skill ships with a detection script at `scripts/detect-llms.sh` inside the s
 bash "${SKILL_DIR}/scripts/detect-llms.sh"
 
 # Fallback if SKILL_DIR isn't set — inline detection:
-for tool in ask-ai ask-gemini gemini llm codex; do
+for tool in agent ask-gemini gemini llm codex; do
   command -v "$tool" >/dev/null 2>&1 && echo "found: $tool"
 done
 ```
