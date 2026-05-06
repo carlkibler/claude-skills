@@ -11,6 +11,16 @@ source ~/.secrets 2>/dev/null || true
 # --- Model Tiers (curate to your taste) ----------------
 # Prices are per million tokens (input/output). Updated 2026-05.
 # Browse: https://openrouter.ai/models?output_modalities=text
+# Refresh the list: source ~/.secrets && curl -s https://openrouter.ai/api/v1/models \
+#   -H "Authorization: Bearer ${OPENROUTER_API_KEY}" | python3 -c "
+#   import json,sys,datetime; d=json.load(sys.stdin)['data']
+#   d=[m for m in d if 'text' in m.get('architecture',{}).get('output_modalities',[])]
+#   d.sort(key=lambda m:m.get('created',0),reverse=True)
+#   [print(datetime.datetime.fromtimestamp(m['created']).strftime('%Y-%m-%d'),
+#     m['id'], m.get('context_length',0)//1000,'k',
+#     '\$%.2f/\$%.2f'%(float(m.get('pricing',{}).get('prompt',0))*1e6,
+#                      float(m.get('pricing',{}).get('completion',0))*1e6))
+#    for m in d[:60]]"
 # ~ prefix = auto-updating "latest" alias — always tracks newest version.
 #
 # Default — fast workhorse for daily use
