@@ -83,6 +83,7 @@ SYSTEM="$SYSTEM_DEFAULT"
 MODEL="$MODEL_DEFAULT"
 TEMPERATURE="0.7"
 MAX_TOKENS="8000"
+REQUEST_TIMEOUT="${AGENT_TIMEOUT:-180}"
 PROMPT_ARGS=()
 INPUT_FILES=()
 READ_STDIN="auto"
@@ -111,6 +112,7 @@ Options:
   --system TEXT       Override system prompt
   --temperature N     Sampling temperature (default 0.7)
   --max-tokens N      Max completion tokens (default 8000)
+  --timeout N         HTTP request timeout seconds (default 180; env AGENT_TIMEOUT)
   --verbose           Print model/input summary to stderr before calling
   --dry-run           Print model/input summary and final prompt; do not call API
   -h, --help          Show this help
@@ -171,6 +173,8 @@ while [[ $# -gt 0 ]]; do
         --temperature=*) TEMPERATURE="${1#*=}"; shift ;;
         --max-tokens)  need_value "$1" "${2:-}"; MAX_TOKENS="$2"; shift 2 ;;
         --max-tokens=*) MAX_TOKENS="${1#*=}"; shift ;;
+        --timeout)     need_value "$1" "${2:-}"; REQUEST_TIMEOUT="$2"; shift 2 ;;
+        --timeout=*)   REQUEST_TIMEOUT="${1#*=}"; shift ;;
         --verbose)     VERBOSE=1; shift ;;
         --dry-run)     DRY_RUN=1; shift ;;
         -h|--help)     show_usage; exit 0 ;;
@@ -240,7 +244,12 @@ done
 if [ "$READ_STDIN" != "no" ]; then
     if [ ! -t 0 ]; then
         stdin_content=$(cat)
-        QUESTION=$(append_section "$QUESTION" "stdin" "$stdin_content")
+        if [ -n "$stdin_content" ]; then
+            QUESTION=$(append_section "$QUESTION" "stdin" "$stdin_content")
+        elif [ "$READ_STDIN" = "yes" ]; then
+            echo "Error: --stdin requested, but stdin was empty" >&2
+            exit 2
+        fi
     elif [ "$READ_STDIN" = "yes" ]; then
         echo "Error: --stdin requested, but stdin is a TTY" >&2
         exit 2
@@ -252,12 +261,44 @@ if [ -z "$QUESTION" ]; then
     exit 1
 fi
 
+case "$MAX_TOKENS" in
+    ''|*[!0-9]*) echo "Error: --max-tokens must be a positive integer" >&2; exit 2 ;;
+esac
+if [ "$MAX_TOKENS" -le 0 ]; then
+    echo "Error: --max-tokens must be a positive integer" >&2
+    exit 2
+fi
+
+set +e
+python3 - "$TEMPERATURE" "$REQUEST_TIMEOUT" <<'PY' >/dev/null
+import math
+import sys
+try:
+    temperature = float(sys.argv[1])
+    timeout = float(sys.argv[2])
+except ValueError:
+    sys.exit(2)
+if not math.isfinite(temperature) or temperature < 0:
+    sys.exit(3)
+if not math.isfinite(timeout) or timeout <= 0:
+    sys.exit(4)
+PY
+validation_rc=$?
+set -e
+case "$validation_rc" in
+    0) ;;
+    2) echo "Error: --temperature and --timeout must be numeric" >&2; exit 2 ;;
+    3) echo "Error: --temperature must be a finite non-negative number" >&2; exit 2 ;;
+    4) echo "Error: --timeout must be a positive number of seconds" >&2; exit 2 ;;
+    *) echo "Error: option validation failed" >&2; exit 2 ;;
+esac
+
 question_chars=$(printf '%s' "$QUESTION" | wc -c | tr -d ' ')
 if [ "$VERBOSE" -eq 1 ] || [ "$DRY_RUN" -eq 1 ]; then
     {
         echo "agent: model=${MODEL}"
         echo "agent: prompt_bytes=${question_chars} files=${#INPUT_FILES[@]} stdin_mode=${READ_STDIN}"
-        echo "agent: max_tokens=${MAX_TOKENS} temperature=${TEMPERATURE}"
+        echo "agent: max_tokens=${MAX_TOKENS} temperature=${TEMPERATURE} timeout=${REQUEST_TIMEOUT}"
     } >&2
 fi
 
@@ -301,6 +342,8 @@ http_code=$(curl -sS -o "$tmpdir/response.json" -w '%{http_code}' https://openro
   -H "Authorization: Bearer ${OPENROUTER_API_KEY}" \
   -H "HTTP-Referer: https://claude.ai" \
   -H "X-Title: Claude Code" \
+  --connect-timeout 10 \
+  --max-time "$REQUEST_TIMEOUT" \
   --data-binary "@$tmpdir/payload.json")
 
 python3 - "$http_code" "$MODEL" "$tmpdir/response.json" <<'PY'
@@ -340,5 +383,8 @@ except Exception:
 
 if content is None:
     content = ""
+if content == "":
+    print(f"Error: OpenRouter returned empty content for {model}", file=sys.stderr)
+    sys.exit(1)
 print(content)
 PY
