@@ -78,21 +78,42 @@ resolve_shorthand() {
 }
 # --------------------------------------------------------------------
 
-SYSTEM="Be concise. No preamble, no closing remarks. Answer directly. Prefer working code over explanation. Give the simplest solution that works."
+SYSTEM_DEFAULT="Be concise. No preamble, no closing remarks. Answer directly. Prefer working code over explanation. Give the simplest solution that works."
+SYSTEM="$SYSTEM_DEFAULT"
 MODEL="$MODEL_DEFAULT"
+TEMPERATURE="0.7"
+MAX_TOKENS="8000"
 PROMPT_ARGS=()
+INPUT_FILES=()
+READ_STDIN="auto"
+VERBOSE=0
+DRY_RUN=0
 
 show_usage() {
-    cat <<EOF
+    cat <<'USAGE'
 Usage: agent [OPTIONS] [SHORTHAND] "your question"
-       pipe content to stdin for large inputs
+       agent [OPTIONS] --file packet.md "review this packet"
+       git diff | agent [OPTIONS] "review this diff"
 
-Tier flags:
-  --fast       Ultra-fast inference (${MODEL_FAST})
-  --smart      Strong reasoning (${MODEL_SMART})
-  --frontier   Best available (${MODEL_FRONTIER})
-  --model ID   Explicit OpenRouter model ID
-  -h, --help   Show this help
+Input behavior:
+  Positional text becomes the main prompt.
+  Piped stdin is appended automatically, even when a prompt is present.
+  --file/-f PATH may be repeated; each file is appended with a filename header.
+
+Options:
+  --fast              Ultra-fast inference
+  --smart             Strong reasoning
+  --frontier          Best available
+  --model ID          Explicit OpenRouter model ID
+  --file, -f PATH     Append file contents to the prompt (aliases: --input, --context, --prompt-file; use - for stdin)
+  --stdin             Require and append stdin, even with prompt/files
+  --no-stdin          Ignore piped stdin
+  --system TEXT       Override system prompt
+  --temperature N     Sampling temperature (default 0.7)
+  --max-tokens N      Max completion tokens (default 8000)
+  --verbose           Print model/input summary to stderr before calling
+  --dry-run           Print model/input summary and final prompt; do not call API
+  -h, --help          Show this help
 
 Model shorthands (first positional arg):
   grok          x-ai/grok-4.3
@@ -111,29 +132,65 @@ Model shorthands (first positional arg):
   qwen          qwen/qwen3.6-plus
   mistral       mistralai/mistral-medium-3-5
 
-Default model: ${MODEL_DEFAULT} (auto-tracks latest Gemini Flash)
-
 Examples:
   agent "What is the time complexity of quicksort?"
   agent grok "Explain the CAP theorem"
-  agent deepseek "Review this function for bugs"
-  git diff | agent kimi "Summarize these changes"
-  agent --frontier "Design a distributed rate limiter"
-EOF
+  agent --model openai/gpt-5.5 "Design a distributed rate limiter"
+  agent --file review-packet.md --smart "Find concrete bugs"
+  agent @review-packet.md grok "Find concrete bugs"
+  git diff | agent kimi "Review these changes"
+  agent --stdin --frontier "Review the attached packet" < packet.md
+USAGE
+    echo
+    echo "Default model: ${MODEL_DEFAULT} (auto-tracks latest Gemini Flash)"
+    echo "Tier models: fast=${MODEL_FAST}; smart=${MODEL_SMART}; frontier=${MODEL_FRONTIER}"
+}
+
+need_value() {
+    local opt="$1"
+    if [ $# -lt 2 ] || [ -z "${2:-}" ]; then
+        echo "Error: ${opt} requires a value" >&2
+        exit 2
+    fi
 }
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --fast)      MODEL="$MODEL_FAST";     shift ;;
-        --smart)     MODEL="$MODEL_SMART";    shift ;;
-        --frontier)  MODEL="$MODEL_FRONTIER"; shift ;;
-        --model)     MODEL="$2";              shift 2 ;;
-        -h|--help)   show_usage; exit 0 ;;
-        *)           PROMPT_ARGS+=("$1");     shift ;;
+        --fast)        MODEL="$MODEL_FAST"; shift ;;
+        --smart)       MODEL="$MODEL_SMART"; shift ;;
+        --frontier)    MODEL="$MODEL_FRONTIER"; shift ;;
+        --model)       need_value "$1" "${2:-}"; MODEL="$2"; shift 2 ;;
+        --model=*)     MODEL="${1#*=}"; shift ;;
+        -f|--file|--input|--context|--prompt-file) need_value "$1" "${2:-}"; INPUT_FILES+=("$2"); shift 2 ;;
+        --file=*|--input=*|--context=*|--prompt-file=*) INPUT_FILES+=("${1#*=}"); shift ;;
+        --stdin)       READ_STDIN="yes"; shift ;;
+        --no-stdin)    READ_STDIN="no"; shift ;;
+        --system)      need_value "$1" "${2:-}"; SYSTEM="$2"; shift 2 ;;
+        --system=*)    SYSTEM="${1#*=}"; shift ;;
+        --temperature) need_value "$1" "${2:-}"; TEMPERATURE="$2"; shift 2 ;;
+        --temperature=*) TEMPERATURE="${1#*=}"; shift ;;
+        --max-tokens)  need_value "$1" "${2:-}"; MAX_TOKENS="$2"; shift 2 ;;
+        --max-tokens=*) MAX_TOKENS="${1#*=}"; shift ;;
+        --verbose)     VERBOSE=1; shift ;;
+        --dry-run)     DRY_RUN=1; shift ;;
+        -h|--help)     show_usage; exit 0 ;;
+        --)            shift; PROMPT_ARGS+=("$@"); break ;;
+        -*)            echo "Error: unknown option: $1" >&2; show_usage >&2; exit 2 ;;
+        @*)
+            file="${1#@}"
+            if [ -r "$file" ]; then
+                INPUT_FILES+=("$file")
+                shift
+            else
+                echo "Error: @file not readable: $file" >&2
+                exit 2
+            fi
+            ;;
+        *)             PROMPT_ARGS+=("$1"); shift ;;
     esac
 done
 
-# Resolve shorthand from first positional arg, if present
+# Resolve shorthand from first positional arg, if present.
 if [ ${#PROMPT_ARGS[@]} -gt 0 ]; then
     shorthand=$(resolve_shorthand "${PROMPT_ARGS[0]}")
     if [ -n "$shorthand" ]; then
@@ -142,43 +199,146 @@ if [ ${#PROMPT_ARGS[@]} -gt 0 ]; then
     fi
 fi
 
+append_section() {
+    local current="$1"
+    local title="$2"
+    local body="$3"
+    if [ -z "$body" ]; then
+        printf '%s' "$current"
+        return
+    fi
+    if [ -n "$current" ]; then
+        printf '%s\n\n--- %s ---\n%s' "$current" "$title" "$body"
+    else
+        printf -- '--- %s ---\n%s' "$title" "$body"
+    fi
+}
+
+QUESTION=""
+if [ ${#PROMPT_ARGS[@]} -gt 0 ]; then
+    QUESTION="${PROMPT_ARGS[*]}"
+fi
+
+for file in "${INPUT_FILES[@]}"; do
+    if [ "$file" = "-" ]; then
+        if [ -t 0 ]; then
+            echo "Error: --file - requested stdin, but stdin is a TTY" >&2
+            exit 2
+        fi
+        content=$(cat)
+        QUESTION=$(append_section "$QUESTION" "stdin" "$content")
+        READ_STDIN="no"
+    elif [ ! -r "$file" ]; then
+        echo "Error: cannot read file: $file" >&2
+        exit 2
+    else
+        content=$(cat "$file")
+        QUESTION=$(append_section "$QUESTION" "file: $file" "$content")
+    fi
+done
+
+if [ "$READ_STDIN" != "no" ]; then
+    if [ ! -t 0 ]; then
+        stdin_content=$(cat)
+        QUESTION=$(append_section "$QUESTION" "stdin" "$stdin_content")
+    elif [ "$READ_STDIN" = "yes" ]; then
+        echo "Error: --stdin requested, but stdin is a TTY" >&2
+        exit 2
+    fi
+fi
+
+if [ -z "$QUESTION" ]; then
+    show_usage >&2
+    exit 1
+fi
+
+question_chars=$(printf '%s' "$QUESTION" | wc -c | tr -d ' ')
+if [ "$VERBOSE" -eq 1 ] || [ "$DRY_RUN" -eq 1 ]; then
+    {
+        echo "agent: model=${MODEL}"
+        echo "agent: prompt_bytes=${question_chars} files=${#INPUT_FILES[@]} stdin_mode=${READ_STDIN}"
+        echo "agent: max_tokens=${MAX_TOKENS} temperature=${TEMPERATURE}"
+    } >&2
+fi
+
+if [ "$DRY_RUN" -eq 1 ]; then
+    printf '%s\n' "$QUESTION"
+    exit 0
+fi
+
 if [ -z "${OPENROUTER_API_KEY:-}" ]; then
     echo "Error: OPENROUTER_API_KEY not set in ~/.secrets" >&2
     exit 1
 fi
 
-if [ ${#PROMPT_ARGS[@]} -gt 0 ]; then
-    QUESTION="${PROMPT_ARGS[*]}"
-elif [ ! -t 0 ]; then
-    QUESTION=$(cat)
-else
-    show_usage >&2
-    exit 1
-fi
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+printf '%s' "$QUESTION" > "$tmpdir/question.txt"
+printf '%s' "$SYSTEM" > "$tmpdir/system.txt"
 
-payload=$(python3 -c "
-import json, sys
+python3 - "$MODEL" "$TEMPERATURE" "$MAX_TOKENS" "$tmpdir/system.txt" "$tmpdir/question.txt" > "$tmpdir/payload.json" <<'PY'
+import json
+import sys
+
+model, temperature, max_tokens, system_path, question_path = sys.argv[1:]
+with open(system_path, encoding="utf-8") as f:
+    system = f.read()
+with open(question_path, encoding="utf-8") as f:
+    question = f.read()
 print(json.dumps({
-    'model': sys.argv[1],
-    'messages': [
-        {'role': 'system', 'content': sys.argv[2]},
-        {'role': 'user', 'content': sys.argv[3]}
+    "model": model,
+    "messages": [
+        {"role": "system", "content": system},
+        {"role": "user", "content": question},
     ],
-    'temperature': 0.7,
-    'max_tokens': 8000
+    "temperature": float(temperature),
+    "max_tokens": int(max_tokens),
 }))
-" "$MODEL" "$SYSTEM" "$QUESTION")
+PY
 
-curl -s https://openrouter.ai/api/v1/chat/completions \
+http_code=$(curl -sS -o "$tmpdir/response.json" -w '%{http_code}' https://openrouter.ai/api/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ${OPENROUTER_API_KEY}" \
   -H "HTTP-Referer: https://claude.ai" \
   -H "X-Title: Claude Code" \
-  -d "$payload" | python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-if 'error' in data:
-    print('Error:', data['error'].get('message', data['error']), file=sys.stderr)
+  --data-binary "@$tmpdir/payload.json")
+
+python3 - "$http_code" "$MODEL" "$tmpdir/response.json" <<'PY'
+import json
+import sys
+
+http_code, model, response_path = sys.argv[1:]
+try:
+    with open(response_path, encoding="utf-8") as f:
+        data = json.load(f)
+except Exception as exc:
+    print(f"Error: OpenRouter returned non-JSON response (HTTP {http_code}) for {model}: {exc}", file=sys.stderr)
+    with open(response_path, encoding="utf-8", errors="replace") as f:
+        preview = f.read(1000).strip()
+    if preview:
+        print(preview, file=sys.stderr)
     sys.exit(1)
-print(data['choices'][0]['message']['content'])
-"
+
+try:
+    code = int(http_code)
+except ValueError:
+    code = 0
+if code < 200 or code >= 300 or "error" in data:
+    err = data.get("error", data)
+    if isinstance(err, dict):
+        msg = err.get("message") or err.get("code") or json.dumps(err)
+    else:
+        msg = str(err)
+    print(f"Error: OpenRouter HTTP {http_code} for {model}: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+try:
+    content = data["choices"][0]["message"]["content"]
+except Exception:
+    print(f"Error: OpenRouter response missing choices for {model}: {json.dumps(data)[:1000]}", file=sys.stderr)
+    sys.exit(1)
+
+if content is None:
+    content = ""
+print(content)
+PY
