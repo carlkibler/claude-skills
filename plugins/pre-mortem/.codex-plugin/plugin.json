@@ -1,7 +1,7 @@
 {
   "name": "pre-mortem",
   "version": "1.0.0",
-  "description": "Multi-agent project pre-mortem \u2014 parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations.",
+  "description": "Multi-agent project pre-mortem — parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Pre-Mortem",
-    "shortDescription": "Multi-agent project pre-mortem \u2014 parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations.",
-    "longDescription": "Multi-agent project pre-mortem \u2014 parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Multi-agent project pre-mortem — parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations.",
+    "longDescription": "Multi-agent project pre-mortem — parallel agents with different failure-finding mandates, synthesized into ranked risks with mitigations. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Productivity",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

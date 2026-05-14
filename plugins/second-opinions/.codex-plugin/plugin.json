@@ -1,7 +1,7 @@
 {
   "name": "second-opinions",
   "version": "1.0.0",
-  "description": "Get validation from a different AI model before committing major changes \u2014 detects available LLM CLIs and routes to the best one.",
+  "description": "Get validation from a different AI model before committing major changes — detects available LLM CLIs and routes to the best one.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Second Opinions",
-    "shortDescription": "Get validation from a different AI model before committing major changes \u2014 detects available LLM CLIs and routes to the best one.",
-    "longDescription": "Get validation from a different AI model before committing major changes \u2014 detects available LLM CLIs and routes to the best one. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Get validation from a different AI model before committing major changes — detects available LLM CLIs and routes to the best one.",
+    "longDescription": "Get validation from a different AI model before committing major changes — detects available LLM CLIs and routes to the best one. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Development",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

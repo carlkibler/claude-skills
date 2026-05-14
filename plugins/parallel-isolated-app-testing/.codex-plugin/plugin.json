@@ -1,7 +1,7 @@
 {
   "name": "parallel-isolated-app-testing",
   "version": "1.0.0",
-  "description": "Design parallel isolated test lanes for desktop apps and local tools with shared state \u2014 maps collision surfaces and splits non-colliding test lanes.",
+  "description": "Design parallel isolated test lanes for desktop apps and local tools with shared state — maps collision surfaces and splits non-colliding test lanes.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Parallel Isolated App Testing",
-    "shortDescription": "Design parallel isolated test lanes for desktop apps and local tools with shared state \u2014 maps collision surfaces and splits non-colliding test lanes.",
-    "longDescription": "Design parallel isolated test lanes for desktop apps and local tools with shared state \u2014 maps collision surfaces and splits non-colliding test lanes. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Design parallel isolated test lanes for desktop apps and local tools with shared state — maps collision surfaces and splits non-colliding test lanes.",
+    "longDescription": "Design parallel isolated test lanes for desktop apps and local tools with shared state — maps collision surfaces and splits non-colliding test lanes. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Development",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

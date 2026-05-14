@@ -1,7 +1,7 @@
 {
   "name": "scope-hammer",
   "version": "1.0.0",
-  "description": "Ruthlessly compress brainstorm output into a shippable MVP \u2014 classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch.",
+  "description": "Ruthlessly compress brainstorm output into a shippable MVP — classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Scope Hammer",
-    "shortDescription": "Ruthlessly compress brainstorm output into a shippable MVP \u2014 classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch.",
-    "longDescription": "Ruthlessly compress brainstorm output into a shippable MVP \u2014 classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Ruthlessly compress brainstorm output into a shippable MVP — classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch.",
+    "longDescription": "Ruthlessly compress brainstorm output into a shippable MVP — classify ideas as DELETE / MOCK / ALREADY EXISTS / SHIP and surface the shortest path to launch. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Productivity",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

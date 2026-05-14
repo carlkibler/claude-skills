@@ -1,7 +1,7 @@
 {
   "name": "profile-me",
   "version": "1.0.0",
-  "description": "Build a personal AI profile from your digital footprint \u2014 portrait, working-with-me guide, and compact system prompt for any AI assistant.",
+  "description": "Build a personal AI profile from your digital footprint — portrait, working-with-me guide, and compact system prompt for any AI assistant.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Profile Me",
-    "shortDescription": "Build a personal AI profile from your digital footprint \u2014 portrait, working-with-me guide, and compact system prompt for any AI assistant.",
-    "longDescription": "Build a personal AI profile from your digital footprint \u2014 portrait, working-with-me guide, and compact system prompt for any AI assistant. Works best on a local machine with user-specific files and tools available.",
+    "shortDescription": "Build a personal AI profile from your digital footprint — portrait, working-with-me guide, and compact system prompt for any AI assistant.",
+    "longDescription": "Build a personal AI profile from your digital footprint — portrait, working-with-me guide, and compact system prompt for any AI assistant. Works best on a local machine with user-specific files and tools available.",
     "developerName": "carlkibler",
     "category": "Productivity",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

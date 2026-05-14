@@ -1,7 +1,7 @@
 {
   "name": "decision-log",
   "version": "1.0.0",
-  "description": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale \u2014 in a format a future agent can read to reconstruct context.",
+  "description": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale — in a format a future agent can read to reconstruct context.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Decision Log",
-    "shortDescription": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale \u2014 in a format a future agent can read to reconstruct context.",
-    "longDescription": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale \u2014 in a format a future agent can read to reconstruct context. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale — in a format a future agent can read to reconstruct context.",
+    "longDescription": "Capture a technical or product decision with chosen option, rejected alternatives, and rationale — in a format a future agent can read to reconstruct context. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Development",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

@@ -89,6 +89,7 @@ Tools for the day-to-day of writing and reviewing code.
 | **handle-pr** | Autonomously address PR review comments end-to-end<br><sub>`/plugin install handle-pr@carl-tools`</sub> |
 | **kindness-check** | Four-lens empathy review: user, machine, developer, support<br><sub>`/plugin install kindness-check@carl-tools`</sub> |
 | **parallel-isolated-app-testing** | Design parallel isolated test lanes for apps with shared local state<br><sub>`/plugin install parallel-isolated-app-testing@carl-tools`</sub> |
+| **ralph-loop** | Repeatable multi-LLM hardening sweeps for codebases<br><sub>`/plugin install ralph-loop@carl-tools`</sub> |
 | **release-operator** | End-to-end release execution with post-release install verification<br><sub>`/plugin install release-operator@carl-tools`</sub> |
 | **remote-host-verifier** | Compare local and remote host behavior before declaring a tool fixed<br><sub>`/plugin install remote-host-verifier@carl-tools`</sub> |
 | **second-opinions** | Get a second opinion from a different AI on complex changes<br><sub>`/plugin install second-opinions@carl-tools`</sub> |

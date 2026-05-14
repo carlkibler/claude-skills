@@ -1,0 +1,26 @@
+{
+  "name": "ralph-loop",
+  "version": "1.0.0",
+  "description": "Repeatable multi-LLM codebase hardening sweeps: map under-reviewed surfaces, patch fixes, document learnings, and loop.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "RALPH Loop",
+    "shortDescription": "Repeatable multi-LLM codebase hardening sweeps: map under-reviewed surfaces, patch fixes, document learnings, and loop.",
+    "longDescription": "Repeatable multi-LLM codebase hardening sweeps: map under-reviewed surfaces, patch fixes, document learnings, and loop. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "developerName": "carlkibler",
+    "category": "Development",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Run a RALPH loop over this repo: map the next under-reviewed surfaces, get multi-LLM review, apply high-confidence fixes, document findings, and tell me the next sweep frontier."
+    ],
+    "brandColor": "#C2410C",
+    "composerIcon": "./skills/ralph-loop/assets/icon.svg",
+    "logo": "./skills/ralph-loop/assets/icon.svg"
+  }
+}

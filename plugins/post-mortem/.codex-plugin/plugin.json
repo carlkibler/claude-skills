@@ -1,7 +1,7 @@
 {
   "name": "post-mortem",
   "version": "1.0.0",
-  "description": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
+  "description": "Analyze a real failure — reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Post-Mortem",
-    "shortDescription": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
-    "longDescription": "Analyze a real failure \u2014 reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Analyze a real failure — reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence.",
+    "longDescription": "Analyze a real failure — reconstruct what happened, find root cause, extract learnings, and feed them back into the skill collection to prevent recurrence. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Productivity",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

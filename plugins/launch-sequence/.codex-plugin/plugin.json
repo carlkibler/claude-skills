@@ -1,7 +1,7 @@
 {
   "name": "launch-sequence",
   "version": "1.0.0",
-  "description": "Run the full pre-launch gauntlet (first-contact \u2192 support-storm \u2192 trust-audit \u2192 pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
+  "description": "Run the full pre-launch gauntlet (first-contact → support-storm → trust-audit → pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Launch Sequence",
-    "shortDescription": "Run the full pre-launch gauntlet (first-contact \u2192 support-storm \u2192 trust-audit \u2192 pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
-    "longDescription": "Run the full pre-launch gauntlet (first-contact \u2192 support-storm \u2192 trust-audit \u2192 pre-mortem) and get a single GO/CAUTION/NO-GO verdict. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Run the full pre-launch gauntlet (first-contact → support-storm → trust-audit → pre-mortem) and get a single GO/CAUTION/NO-GO verdict.",
+    "longDescription": "Run the full pre-launch gauntlet (first-contact → support-storm → trust-audit → pre-mortem) and get a single GO/CAUTION/NO-GO verdict. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Productivity",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

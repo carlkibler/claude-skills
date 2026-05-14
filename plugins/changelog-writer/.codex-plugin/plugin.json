@@ -1,7 +1,7 @@
 {
   "name": "changelog-writer",
   "version": "1.0.0",
-  "description": "Generate user-facing changelog entries from git history \u2014 plain language, audience-segmented, with optional CHANGELOG.md update.",
+  "description": "Generate user-facing changelog entries from git history — plain language, audience-segmented, with optional CHANGELOG.md update.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,13 +11,13 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Changelog Writer",
-    "shortDescription": "Generate user-facing changelog entries from git history \u2014 plain language, audience-segmented, with optional CHANGELOG.md update.",
-    "longDescription": "Generate user-facing changelog entries from git history \u2014 plain language, audience-segmented, with optional CHANGELOG.md update. Works best on a local machine with user-specific files and tools available.",
+    "shortDescription": "Generate user-facing changelog entries from git history — plain language, audience-segmented, with optional CHANGELOG.md update.",
+    "longDescription": "Generate user-facing changelog entries from git history — plain language, audience-segmented, with optional CHANGELOG.md update. Works best on a local machine with user-specific files and tools available.",
     "developerName": "carlkibler",
     "category": "Development",
     "websiteURL": "https://github.com/carlkibler/agent-skills",
     "defaultPrompt": [
-      "Write a user-facing changelog for the changes since the last release. Segment by audience: users, developers, operators. Plain language only \u2014 no commit hashes or internal jargon."
+      "Write a user-facing changelog for the changes since the last release. Segment by audience: users, developers, operators. Plain language only — no commit hashes or internal jargon."
     ],
     "brandColor": "#8B5CF6",
     "composerIcon": "./skills/changelog-writer/assets/icon.svg",

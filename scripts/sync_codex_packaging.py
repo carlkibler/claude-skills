@@ -181,7 +181,7 @@ def main() -> None:
                 "logo": "./skills/" + skill_name + "/assets/icon.svg",
             },
         }
-        (plugin_root / ".codex-plugin" / "plugin.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        (plugin_root / ".codex-plugin" / "plugin.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
 
         assets_dir = skill_path / "assets"
         assets_dir.mkdir(parents=True, exist_ok=True)
@@ -203,7 +203,7 @@ def main() -> None:
         )
         readme_rows[group].append({"name": skill_name, "usage": usage, "summary": summary})
 
-    (AGENT_PLUGINS_DIR / "marketplace.json").write_text(json.dumps(codex_marketplace, indent=2) + "\n")
+    (AGENT_PLUGINS_DIR / "marketplace.json").write_text(json.dumps(codex_marketplace, indent=2, ensure_ascii=False) + "\n")
     update_readme(readme_rows)
 
 

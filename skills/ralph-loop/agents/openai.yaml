@@ -1,0 +1,9 @@
+interface:
+  display_name: "RALPH Loop"
+  short_description: "Repeatable multi-LLM codebase hardening sweeps: map under-reviewed surfaces, patch fixes, document learnings, and loop. Safe for repo-local and cloud/repo-checkout workflows."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#C2410C"
+  default_prompt: "Run a RALPH loop over this repo: map the next under-reviewed surfaces, get multi-LLM review, apply high-confidence fixes, document findings, and tell me the next sweep frontier."
+policy:
+  allow_implicit_invocation: true

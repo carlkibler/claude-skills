@@ -1,7 +1,7 @@
 {
   "name": "kindness-check",
   "version": "1.0.0",
-  "description": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses.",
+  "description": "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Kindness Check",
-    "shortDescription": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses.",
-    "longDescription": "Review code through four empathy lenses \u2014 user, machine, developer, support \u2014 to surface quality issues that pure technical review misses. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses.",
+    "longDescription": "Review code through four empathy lenses — user, machine, developer, support — to surface quality issues that pure technical review misses. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Development",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

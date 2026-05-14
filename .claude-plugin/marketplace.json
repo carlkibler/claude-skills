@@ -226,6 +226,16 @@
       ],
       "category": "productivity",
       "version": "1.0.0"
+    },
+    {
+      "name": "ralph-loop",
+      "description": "Repeatable multi-LLM codebase hardening sweeps: map under-reviewed surfaces, patch fixes, document learnings, and loop.",
+      "source": "./",
+      "skills": [
+        "./skills/ralph-loop"
+      ],
+      "category": "development",
+      "version": "1.0.0"
     }
   ]
 }

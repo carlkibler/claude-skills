@@ -1,7 +1,7 @@
 {
   "name": "handle-pr",
   "version": "1.1.0",
-  "description": "Autonomously handle GitHub PR review comments \u2014 evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
+  "description": "Autonomously handle GitHub PR review comments — evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Handle PR",
-    "shortDescription": "Autonomously handle GitHub PR review comments \u2014 evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
-    "longDescription": "Autonomously handle GitHub PR review comments \u2014 evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads. Works best on a local machine with user-specific files and tools available.",
+    "shortDescription": "Autonomously handle GitHub PR review comments — evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
+    "longDescription": "Autonomously handle GitHub PR review comments — evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads. Works best on a local machine with user-specific files and tools available.",
     "developerName": "carlkibler",
     "category": "Productivity",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

@@ -1,7 +1,7 @@
 {
   "name": "trust-audit",
   "version": "1.0.0",
-  "description": "Audit whether a product feels trustworthy or unsafe \u2014 covering permissions, privacy, billing, file mutation, and silent-failure surfaces.",
+  "description": "Audit whether a product feels trustworthy or unsafe — covering permissions, privacy, billing, file mutation, and silent-failure surfaces.",
   "author": {
     "name": "carlkibler"
   },
@@ -11,8 +11,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Trust Audit",
-    "shortDescription": "Audit whether a product feels trustworthy or unsafe \u2014 covering permissions, privacy, billing, file mutation, and silent-failure surfaces.",
-    "longDescription": "Audit whether a product feels trustworthy or unsafe \u2014 covering permissions, privacy, billing, file mutation, and silent-failure surfaces. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
+    "shortDescription": "Audit whether a product feels trustworthy or unsafe — covering permissions, privacy, billing, file mutation, and silent-failure surfaces.",
+    "longDescription": "Audit whether a product feels trustworthy or unsafe — covering permissions, privacy, billing, file mutation, and silent-failure surfaces. Works well in repo-local and Codex cloud workflows that operate on a checked-out repository.",
     "developerName": "carlkibler",
     "category": "Security",
     "websiteURL": "https://github.com/carlkibler/agent-skills",

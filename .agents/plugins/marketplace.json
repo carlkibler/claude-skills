@@ -149,6 +149,18 @@
       "category": "Productivity"
     },
     {
+      "name": "ralph-loop",
+      "source": {
+        "source": "local",
+        "path": "./plugins/ralph-loop"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
+    },
+    {
       "name": "release-operator",
       "source": {
         "source": "local",
