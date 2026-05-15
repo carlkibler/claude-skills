@@ -1,0 +1,9 @@
+interface:
+  display_name: "Django Smoke Alarm"
+  short_description: "Run and triage Django/DRF security smoke checks into real risks, hygiene, and false positives using clean-scan discipline. Best in local Codex CLI/app sessions on your own machine."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#DC2626"
+  default_prompt: "Run a Django smoke-alarm pass on this project. Use a clean scan, exclude worktrees/vendor/generated folders, and classify findings as REAL, HYGIENE, or FALSE POSITIVE with file-line evidence."
+policy:
+  allow_implicit_invocation: false

@@ -53,6 +53,18 @@
       "category": "Development"
     },
     {
+      "name": "django-smoke-alarm",
+      "source": {
+        "source": "local",
+        "path": "./plugins/django-smoke-alarm"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Development"
+    },
+    {
       "name": "first-contact",
       "source": {
         "source": "local",

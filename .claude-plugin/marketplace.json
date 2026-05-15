@@ -38,6 +38,16 @@
       "version": "1.0.0"
     },
     {
+      "name": "django-smoke-alarm",
+      "description": "Run and triage Django/DRF security smoke checks into real risks, hygiene, and false positives using clean-scan discipline.",
+      "source": "./",
+      "skills": [
+        "./skills/django-smoke-alarm"
+      ],
+      "category": "development",
+      "version": "1.0.0"
+    },
+    {
       "name": "handle-pr",
       "description": "Autonomously handle GitHub PR review comments — evaluate, implement HIGH/MEDIUM changes, run tests, commit, reply to all threads.",
       "source": "./",

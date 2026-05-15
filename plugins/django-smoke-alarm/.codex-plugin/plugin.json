@@ -1,0 +1,26 @@
+{
+  "name": "django-smoke-alarm",
+  "version": "1.0.0",
+  "description": "Run and triage Django/DRF security smoke checks into real risks, hygiene, and false positives using clean-scan discipline.",
+  "author": {
+    "name": "carlkibler"
+  },
+  "homepage": "https://github.com/carlkibler/agent-skills",
+  "repository": "https://github.com/carlkibler/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Django Smoke Alarm",
+    "shortDescription": "Run and triage Django/DRF security smoke checks into real risks, hygiene, and false positives using clean-scan discipline.",
+    "longDescription": "Run and triage Django/DRF security smoke checks into real risks, hygiene, and false positives using clean-scan discipline. Works best on a local machine with user-specific files and tools available.",
+    "developerName": "carlkibler",
+    "category": "Development",
+    "websiteURL": "https://github.com/carlkibler/agent-skills",
+    "defaultPrompt": [
+      "Run a Django smoke-alarm pass on this project. Use a clean scan, exclude worktrees/vendor/generated folders, and classify findings as REAL, HYGIENE, or FALSE POSITIVE with file-line evidence."
+    ],
+    "brandColor": "#DC2626",
+    "composerIcon": "./skills/django-smoke-alarm/assets/icon.svg",
+    "logo": "./skills/django-smoke-alarm/assets/icon.svg"
+  }
+}
